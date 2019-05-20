@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\TweetRequest;
+use App\Models\Tweet;
 
 class TweetController extends Controller
 {
@@ -11,9 +14,18 @@ class TweetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public $tweet; 
+
+    public function __construct(Tweet $tweet)
+    {
+        $this->tweet = $tweet;
+    }
+
     public function index()
     {
-        return view('tweet.index');
+        $tweets = $this->tweet->all();
+        return view('user.tweet.index', compact('tweets'));
     }
 
     /**
@@ -23,7 +35,7 @@ class TweetController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.tweet.create');
     }
 
     /**
@@ -34,7 +46,9 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $this->tweet->fill($input)->save();
+        return redirect()->route('tweet.index');
     }
 
     /**

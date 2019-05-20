@@ -11,4 +11,6 @@
 |
 */
 
-Route::get('/', 'TweetController@index');
+Route::get('/', 'TweetController@index')->name('tweet.index');
+Route::get('tweet/create', 'TweetController@create')->name('tweet.create');
+Route::post('/', 'TweetController@store')->name('tweet.store');
