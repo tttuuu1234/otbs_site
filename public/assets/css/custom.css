@@ -24,6 +24,7 @@ a {
   left: 0;
   width: 100%;
   z-index: 99;
+  background-color: aqua;;
 }
 
 .otbs-header-wrap {

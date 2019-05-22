@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class tweet extends Model
 {
-    use SoftDelete;
+    use SoftDeletes;
 
     protected $fillable = [
         'content',
