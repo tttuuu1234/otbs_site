@@ -2,33 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\TweetRequest;
-use App\Models\Tweet;
-use App\Models\Tag;
 
-class TweetController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public $tweet;
-    public $tag; 
-
-    public function __construct(Tweet $tweet, Tag $tag)
-    {
-        $this->tweet = $tweet;
-        $this->tag = $tag;
-    }
-
     public function index()
     {
-        $tweets = $this->tweet->all();
-        return view('user.tweet.index', compact('tweets'));
+        //
     }
 
     /**
@@ -38,7 +23,7 @@ class TweetController extends Controller
      */
     public function create()
     {
-        return view('user.tweet.create');
+        //
     }
 
     /**
@@ -49,11 +34,7 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->all();
-        $this->tweet->fill($inputs)->save();
-        $this->tag->fill($inputs)->save();
-
-        return redirect()->route('tweet.index');
+        //
     }
 
     /**
@@ -64,8 +45,7 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-        $tweets = $this->tweet->find($id);
-        return view('user.tweet.show', compact('tweets'));
+        //
     }
 
     /**
@@ -76,8 +56,7 @@ class TweetController extends Controller
      */
     public function edit($id)
     {
-        $tweet = $this->tweet->find($id);
-        return view('user.tweet.edit', compact('tweet'));
+        //
     }
 
     /**
@@ -89,9 +68,7 @@ class TweetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $inputs = $request->all();
-        $this->tweet->find($id)->fill($inputs)->save();
-        return redirect()->route('tweet.index');
+        //
     }
 
     /**
@@ -102,7 +79,6 @@ class TweetController extends Controller
      */
     public function destroy($id)
     {
-        $this->tweet->find($id)->delete();
-        return redirect()->route('tweet.index');
+        //
     }
 }

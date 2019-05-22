@@ -54,19 +54,31 @@ a {
   color: #555555;
 }
 
-.otbs-header__list__item:hover,
-.tweet__name:hover,
-.tweet__comment__btn:hover,
-.tweet__comment:hover {
+.link__hover:hover{
   transition: .2s;
   color: #FFBBFF
+}
+
+.nav__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.is-hidden {
+  display: none;
 }
 /* layout */
 
 /* index */
 
 .tweet-box {
-  padding-top: 120px;
+  padding-top: 180px;
+}
+
+.tweet-container {
+  border: 2px solid black;
+  margin-bottom: 12px;
 }
 
 .tweet__name {
@@ -100,7 +112,7 @@ a {
 
 /* create */
 
-.form-contents {
+.form-module {
   border-radius: 10px;
 }
 
