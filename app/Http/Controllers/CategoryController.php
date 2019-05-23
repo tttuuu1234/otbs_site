@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\TweetRequest;
-use App\Models\Tweet;
-use App\Models\Tag;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 
-
-class TweetController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,21 +13,16 @@ class TweetController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public $tweet;
-    public $tag; 
+     public $category;
 
-    public function __construct(Tweet $tweet, Tag $tag)
+    public function __construct(Category $category)
     {
-        $this->tweet = $tweet;
-        $this->tag = $tag;
-        $this->middleware('auth');
+        $this->category = $category;
     }
 
     public function index()
     {
-        $tweets = $this->tweet->all();
-        // dd($tweets);
-        return view('user.tweet.index', compact('tweets'));
+        return view('user.tweet.index');
     }
 
     /**
@@ -42,7 +32,7 @@ class TweetController extends Controller
      */
     public function create()
     {
-        return view('user.tweet.create');
+        return view('user.category.create');
     }
 
     /**
@@ -54,14 +44,7 @@ class TweetController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-        $inputs['user_id'] = Auth::id();
-        $tweet =$this->tweet->fill($inputs)->save();
-        $this->tag->fill($inputs)->save();
-
-        //レコードを1件取得するためにその中の一意なものをwhereで指定する
-        //取得したレコードからidをとる
-        //そのidを元にfindでオブジェクト取得
-        //
+        $this->category->fill($inputs)->save();
         return redirect()->route('tweet.index');
     }
 
@@ -73,8 +56,7 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-        $tweets = $this->tweet->find($id);
-        return view('user.tweet.show', compact('tweets'));
+        //
     }
 
     /**
@@ -85,8 +67,7 @@ class TweetController extends Controller
      */
     public function edit($id)
     {
-        $tweet = $this->tweet->find($id);
-        return view('user.tweet.edit', compact('tweet'));
+        //
     }
 
     /**
@@ -98,10 +79,7 @@ class TweetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $inputs = $request->all();
-        // $inputs['user_id'] = Auth::id();
-        $this->tweet->find($id)->fill($inputs)->save();
-        return redirect()->route('tweet.index');
+        //
     }
 
     /**
@@ -112,7 +90,6 @@ class TweetController extends Controller
      */
     public function destroy($id)
     {
-        $this->tweet->find($id)->delete();
-        return redirect()->route('tweet.index');
+        //
     }
 }

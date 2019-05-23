@@ -2,10 +2,11 @@
 @section('content')
 
   <div class="tweet-box">
+    <div class="category-box"><a href="{{ route('category.create') }}">カテゴリー</a></div>
     @foreach ($tweets as $tweet)
       <div class="tweet-container">
         <div class="tweet-header">
-          <a href="{{ route('tweet.show', $tweet->id) }}" class="tweet__name link__hover">tsubasa</a>
+          <a href="{{ route('tweet.show', $tweet->id) }}" class="tweet__name link__hover">{{ $tweet->user->name }}</a>
         </div>
         <div class="tweet__photo">{{ $tweet->content }}</div>
         <div class="tweet-mini-box">

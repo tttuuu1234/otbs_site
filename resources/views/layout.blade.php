@@ -14,7 +14,7 @@
 <body class="body">
   <header class="otbs-header">
     <div class="otbs-header-wrap inner">
-      <div class="otbs-header__title">tsubastagram</div>
+      <div class="otbs-header__title"><a href="{{ route('tweet.index') }}">tsubastagram</a></div>
       <ul class="otbs-header__list">
         <li><a href="#" class="otbs-header__list__item link__hover"><i class="fas fa-info-circle"></i></a></li>
         <li><a href="#" class="otbs-header__list__item link__hover"><i class="far fa-envelope-open"></i></a></li>
@@ -33,7 +33,7 @@
       </ul>
 
       <ul class="nav__contents__list">
-        <li class="nav__contents"><a href="#">hello</a></li>
+        <li class="nav__contents is-hidden"><a href="#">hello</a></li>
         <li class="nav__contents is-hidden"><a href="#">こんにちは</a></li>
         <li class="nav__contents is-hidden"><a href="#">何してるの</a></li>
         <li class="nav__contents is-hidden"><a href="#">遊んでるの</a></li>

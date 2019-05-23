@@ -3,7 +3,7 @@
 
 <div class="tweet-box">
     <div class="tweet-header">
-      <div class="tweet__name ">tsubasa</div>
+      <div class="tweet__name ">{{ $tweets->user->name }}</div>
     </div>
     <div class="tweet__photo">{{ $tweets->content }}</div>
     <div class="tweet-mini-box">

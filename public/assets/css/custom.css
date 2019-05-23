@@ -24,7 +24,6 @@ a {
   left: 0;
   width: 100%;
   z-index: 99;
-  background-color: aqua;;
 }
 
 .otbs-header-wrap {
@@ -32,6 +31,7 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 14px 0;
+  background-color: aqua;
 }
 
 .otbs-header__title {
@@ -64,6 +64,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: red;
 }
 
 .is-hidden {
@@ -73,7 +74,8 @@ a {
 
 /* index */
 
-.tweet-box {
+.tweet-box,
+.category-create {
   padding-top: 180px;
 }
 

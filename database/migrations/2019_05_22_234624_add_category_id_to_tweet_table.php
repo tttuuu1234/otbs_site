@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTagTweetTable extends Migration
+class AddCategoryIdToTweetTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateTagTweetTable extends Migration
      */
     public function up()
     {
-        Schema::create('tag_tweet', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('tweet_id');
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('tweets', function (Blueprint $table) {
+            $table->integer('category_id');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateTagTweetTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tag_tweet');
+        Schema::table('tweets', function (Blueprint $table) {
+            $tabel->integer('category_id');
+        });
     }
 }
