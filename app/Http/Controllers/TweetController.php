@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TweetRequest;
 use App\Models\Tweet;
 use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -20,19 +21,32 @@ class TweetController extends Controller
 
     public $tweet;
     public $tag; 
+    public $category;
 
-    public function __construct(Tweet $tweet, Tag $tag)
+    public function __construct(Tweet $tweet, Tag $tag, Category $category)
     {
         $this->tweet = $tweet;
         $this->tag = $tag;
+        $this->category = $category;
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $tweets = $this->tweet->all();
-        // dd($tweets);
-        return view('user.tweet.index', compact('tweets'));
+        $inputs = $request->all(); //Formから送られてきた値
+        // dd($inputs);
+        $categories = $this->category->all();
+        if(array_key_exists('category_id', $inputs)) {
+            $tweets = $this->tweet->searchCategory($inputs); //tweetのインスタンスに対してsearchCategoryを行なっているので、tweetsテーブルの中のcategory_idに対して行う
+        } elseif(array_key_exists('tag_id', $inputs)) {
+            $tags = $this->tag->find($inputs['tag_id']); //$inputsに格納されているtag_idの値をfindでそのidをしているtagのオブジェクトを取得
+            $tweets= $tags->tweet()->orderby('tag_id', 'desc')->get(); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
+            return view('user.tweet.index', compact('tweets', 'categories', 'inputs'));
+        } else {
+            $tweets = $this->tweet->orderby('created_at', 'desc')->get();
+        }
+
+        return view('user.tweet.index', compact('tweets', 'categories','inputs'));
     }
 
     /**
@@ -42,7 +56,8 @@ class TweetController extends Controller
      */
     public function create()
     {
-        return view('user.tweet.create');
+        $categories = $this->category->all();
+        return view('user.tweet.create', compact('categories'));
     }
 
     /**
@@ -53,15 +68,16 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->all();
-        $inputs['user_id'] = Auth::id();
-        $tweet =$this->tweet->fill($inputs)->save();
-        $this->tag->fill($inputs)->save();
 
         //レコードを1件取得するためにその中の一意なものをwhereで指定する
         //取得したレコードからidをとる
         //そのidを元にfindでオブジェクト取得
-        //
+
+        $inputs = $request->all();
+        $tweet = $this->tweet->fill($inputs)->save();
+        $tag = $this->tag->firstOrCreate(['name' => $inputs['name']]);//firstOrCreate(検索したいレコードのカラム名, 新しくレコードを追加する時に挿入する他のカラムの値)
+        $tagId = $tag->id;//tagからidを取得している
+        $this->tweet->tag()->attach($tagId); //中間テーブルに保存する処理
         return redirect()->route('tweet.index');
     }
 

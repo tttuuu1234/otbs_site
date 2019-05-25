@@ -12,6 +12,14 @@ class Tag extends Model
 
     public function tweet()
     {
-        return $this->belongsToMany('App\Models\Tweet', 'tag_tweet','tweet_id', 'tag_id');
+        return $this->belongsToMany(Tweet::class);
     }
+
+    public function scopeEqual($query, $colmnName, $colmnValue)
+    {
+        if(!empty($colmnValue)) {
+            $query->where($colmnName, $colmnValue);
+        }
+    }
+
 }

@@ -26,7 +26,7 @@ class AddCategoryIdToTweetTable extends Migration
     public function down()
     {
         Schema::table('tweets', function (Blueprint $table) {
-            $tabel->integer('category_id');
+            // $tabel->integer('category_id');
         });
     }
 }

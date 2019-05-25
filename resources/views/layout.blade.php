@@ -21,26 +21,6 @@
         <li><a href="{{route('tweet.create')}}" class="otbs-header__list__item link__hover"><i class="fas fa-plus-square"></i></a></li>
       </ul>
     </div>
-
-    <nav class="nav inner">
-      <ul class="nav__list">
-        <li class="nav__list__item"><a href="#">all</a></li>
-        <li class="nav__list__item"><a href="#">エンタメ</a></li>
-        <li class="nav__list__item"><a href="#">スポーツ</a></li>
-        <li class="nav__list__item"><a href="#">お笑い</a></li>
-        <li class="nav__list__item"><a href="#">動物</a></li>
-        <li class="nav__list__item"><a href="#">美女</a></li>
-      </ul>
-
-      <ul class="nav__contents__list">
-        <li class="nav__contents is-hidden"><a href="#">hello</a></li>
-        <li class="nav__contents is-hidden"><a href="#">こんにちは</a></li>
-        <li class="nav__contents is-hidden"><a href="#">何してるの</a></li>
-        <li class="nav__contents is-hidden"><a href="#">遊んでるの</a></li>
-        <li class="nav__contents is-hidden"><a href="#">いいなあ</a></li>
-        <li class="nav__contents is-hidden"><a href="#">愛してる</a></li>
-      </ul>
-    </nav>
   </header>
 
   <main class="otbs-main inner">
