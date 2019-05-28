@@ -18,6 +18,7 @@ Route::get('tweet/{id}', ['as' => 'tweet.show', 'uses' => 'TweetController@show'
 Route::get('tweet/{id}/edit', ['as' => 'tweet.edit', 'uses' => 'TweetController@edit']);
 Route::put('tweet/{id}/', ['as' => 'tweet.update', 'uses' => 'TweetController@update']);
 Route::delete('tweet/{id}/', ['as' => 'tweet.destroy', 'uses' => 'TweetController@destroy']);
+Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
 
 Route::resource('tag', TagController::class);
 Route::resource('category', CategoryController::class);

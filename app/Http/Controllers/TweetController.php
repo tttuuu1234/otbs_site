@@ -8,6 +8,9 @@ use App\Http\Requests\TweetRequest;
 use App\Models\Tweet;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\Comment;
+use App\Models\SubCategory;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -22,19 +25,21 @@ class TweetController extends Controller
     public $tweet;
     public $tag; 
     public $category;
+    public $subCategory;
 
-    public function __construct(Tweet $tweet, Tag $tag, Category $category)
+    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory)
     {
         $this->tweet = $tweet;
         $this->tag = $tag;
         $this->category = $category;
+        $this->subCategory = $subCategory;
         $this->middleware('auth');
     }
 
     public function index(Request $request)
     {
         $inputs = $request->all(); //Formから送られてきた値
-        // dd($inputs);
+            // dd($inputs);
         $categories = $this->category->all();
         if(array_key_exists('category_id', $inputs)) {
             $tweets = $this->tweet->searchCategory($inputs); //tweetのインスタンスに対してsearchCategoryを行なっているので、tweetsテーブルの中のcategory_idに対して行う
@@ -42,9 +47,13 @@ class TweetController extends Controller
             $tags = $this->tag->find($inputs['tag_id']); //$inputsに格納されているtag_idの値をfindでそのidをしているtagのオブジェクトを取得
             $tweets= $tags->tweet()->orderby('tag_id', 'desc')->get(); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
             return view('user.tweet.index', compact('tweets', 'categories', 'inputs'));
+        } elseif(array_key_exists('subCategory_id', $inputs)){
+            $tweets = $this->tweet->searchSubCategory($inputs);
         } else {
             $tweets = $this->tweet->orderby('created_at', 'desc')->get();
         }
+        // dd($tweets);
+
 
         return view('user.tweet.index', compact('tweets', 'categories','inputs'));
     }
@@ -57,7 +66,8 @@ class TweetController extends Controller
     public function create()
     {
         $categories = $this->category->all();
-        return view('user.tweet.create', compact('categories'));
+        $subCategories = $this->subCategory->all();
+        return view('user.tweet.create', compact('categories', 'subCategories'));
     }
 
     /**
@@ -129,6 +139,14 @@ class TweetController extends Controller
     public function destroy($id)
     {
         $this->tweet->find($id)->delete();
+        return redirect()->route('tweet.index');
+    }
+
+    public function createComment(Request $request)
+    {
+        $comment = new comment;
+        $inputs = $request->all();
+        $comments = $comment->fill($inputs)->save();
         return redirect()->route('tweet.index');
     }
 }

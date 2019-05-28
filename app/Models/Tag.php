@@ -14,12 +14,4 @@ class Tag extends Model
     {
         return $this->belongsToMany(Tweet::class);
     }
-
-    public function scopeEqual($query, $colmnName, $colmnValue)
-    {
-        if(!empty($colmnValue)) {
-            $query->where($colmnName, $colmnValue);
-        }
-    }
-
 }

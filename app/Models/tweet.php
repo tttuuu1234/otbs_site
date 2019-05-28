@@ -13,6 +13,7 @@ class Tweet extends Model
         'content',
         'user_id',
         'category_id',
+        'subCategory_id',
     ];
 
     protected $dates = [
@@ -36,6 +37,16 @@ class Tweet extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class, 'subCategory_id');
+    }
+
     public function scopeEqual($query, $colmnName, $colmnValue)
     {
         if(!empty($colmnValue)) {
@@ -50,9 +61,10 @@ class Tweet extends Model
                     ->get();
     }
 
-    public function searchTag($inputs)
+    public function searchSubCategory($inputs)
     {
-        return $this->orderby('tag_id', 'desc')
+        return $this->equal('subCategory_id', $inputs['subCategory_id'])
+                    ->orderby('created_at', 'desc')
                     ->get();
     }
 
