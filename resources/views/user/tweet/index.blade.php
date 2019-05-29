@@ -5,22 +5,23 @@
     <div class="category-box"><a href="{{ route('category.create') }}">カテゴリー</a></div>
     <nav class="nav inner">
       <ul class="nav__list">
-      <li class="nav__list__item"><a href="{{ route('tweet.index') }}">all</a></li>
+        <li class="nav__list__item nav-category"><a href="{{ route('tweet.index') }}">all</a></li>
         @foreach ($categories as $category)
-
           <li class="nav__list__item">
             {!! Form::open(['route' => 'tweet.index', 'method' => 'get']) !!} <!--indexにnameと送っている-->
               {!! Form::input('hidden', 'category_id', $category->id)!!} <!--categoryテーブルに保存されているidを連想配列のkeyに指定-->
-              {!! Form::input('submit', 'name', $category->name)!!}
+              {!! Form::input('submit', 'name', $category->name, ['class' => 'nav-category'])!!}
             {!! Form::close() !!}
-              <ul class="sub__nav__list">
+            <div class="sub__nav__list is-hidden">
+              <ul class="sub__nav__list__items inner">
                 @foreach ($category->subCategory as $subCategory)
                   {!! Form::open(['route' => 'tweet.index', 'method' => 'get']) !!} <!--indexにnameと送っている-->
                     {!! Form::input('hidden', 'subCategory_id', $subCategory->id) !!}
-                    <li class="nav__list__subItem">{!! Form::input('submit', 'content', $subCategory->content) !!}</li>
+                    <li class="sub__nav__list__item">{!! Form::input('submit', 'content', $subCategory->content) !!}</li>
                   {!! Form::close() !!}
                 @endforeach
               </ul>      
+            </div>
           </li>     
         @endforeach
       </ul>
@@ -34,7 +35,7 @@
         <div class="tweet__content">{{ $tweet->content }}</div>
         <div class="tweet__like__btn"><i class="far fa-heart"></i></div>
         <div class="tweet__category">{{ $tweet->category->name }}</div>
-          <div class="tweet__subCategory">{{ $tweet->subCategory->content }}</div>
+        <div class="tweet__sub__category">{{ $tweet->subCategory->content }}</div>
         <a href="{{ route('tweet.show', $tweet->id) }}" class="tweet__comment">{{ $tweet->comment->count() }}</a>
         <div class="tweet__tag">
         @foreach ($tweet->tag as $tag)

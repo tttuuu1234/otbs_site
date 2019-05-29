@@ -14,17 +14,25 @@
 					<option value= "{{ $category->id }}">{{ $category->name }}</option>
 				@endforeach
 			</select>
+			<span></span>
 			<select name="subCategory_id" class="form-select">
 				<option value="">SubCategory</option>
 					@foreach ($subCategories as $subCategory)
 						<option value="{{ $subCategory->id }}">{{ $subCategory->content }}</option>
 					@endforeach	
 			</select>
+			<span></span>
+		</div>
+		<div class="form-group @if(!empty($errors->first('content'))) has-error @endif">
 			<span class="require">*(入力必須)</span>
 			<textarea name="content" class="form-module form-content" cols="100" rows="20" placeholder="本文を記入してください(400文字以内)"></textarea>
-			<input type="text" class="form-module form-text" name="name" placeholder="タグを記入してください">
-			<input type="submit" class="form-submit" value="post">
+			<span class="error-message">{{ $errors->first('content') }}</span>
 		</div>
+		<div class="form-group">
+			<input type="text" class="form-module form-text" name="name" placeholder="タグを記入してください">
+			<span></span>
+		</div>
+			<input type="submit" class="form-submit" value="post">
 	{!!Form::close()!!}
 </div>
 </div>

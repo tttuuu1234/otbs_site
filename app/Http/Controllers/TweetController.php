@@ -76,7 +76,7 @@ class TweetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TweetRequest $request)
     {
 
         //レコードを1件取得するためにその中の一意なものをwhereで指定する

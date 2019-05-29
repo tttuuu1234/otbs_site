@@ -24,15 +24,15 @@ class TweetRequest extends FormRequest
     public function rules()
     {
         return [
-            'contents' => 'required|max:400',
+            'content' => 'required|max:400',
         ];
     }
 
-    public function message()
+    public function messages()
     {
         return [
-            'contents.required' => '入力必須だよーーーーーーーーん',
-            'contents.max'      => '400文字以内で入力しろよな？',
+            'content.required' => '入力必須だよーーーーーーーーん',
+            'content.max'      => '400文字以内で入力しろよな？',
         ];
     }
 }

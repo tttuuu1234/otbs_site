@@ -5,4 +5,10 @@ $(function(){
     $('.modal-close').click(function(){
         $('.comment-modal').addClass('is-hidden');
     })
+
+    $('.nav__list__item').hover(function(){
+        $(this).find('.sub__nav__list').fadeIn();
+    }, function(){
+        $(this).find('.sub__nav__list').fadeOut();
+    })
 })
