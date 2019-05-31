@@ -19,9 +19,14 @@ Route::get('tweet/{id}/edit', ['as' => 'tweet.edit', 'uses' => 'TweetController@
 Route::put('tweet/{id}/', ['as' => 'tweet.update', 'uses' => 'TweetController@update']);
 Route::delete('tweet/{id}/', ['as' => 'tweet.destroy', 'uses' => 'TweetController@destroy']);
 Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
+Route::get('tweet/tag/count', ['as' => 'tweet.tag.count', 'uses' => 'TweetController@tagCount']);
 
 Route::resource('tag', TagController::class);
+Route::resource('weekly', WeeklyController::class);
+Route::resource('monthly', MonthlyController::class);
 Route::resource('category', CategoryController::class);
+Route::resource('subCategory', SubCategoryController::class);
+
 
 Route::auth();
 

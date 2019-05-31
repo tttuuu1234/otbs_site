@@ -3,26 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\Category;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-     public $category;
-     public $subCategory;
-
-    public function __construct(Category $category, SubCategory $subCategory)
-    {
-        $this->category = $category;
-        $this->subCategory = $subCategory;
-    }
-
     public function index()
     {
         return view('user.tweet.index');
@@ -35,7 +25,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('user.category.create', compact('categories'));
+        $category = new category;
+        $categories = $category->all();
+        return view('user.subcategory.create', compact('categories'));
     }
 
     /**
@@ -47,7 +39,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-        $this->category->fill($inputs)->save();
+        $subCategory = new subCategory;
+        $subCategory->fill($inputs)->save();
         return redirect()->route('tweet.index');
     }
 

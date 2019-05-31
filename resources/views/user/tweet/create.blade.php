@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-<div class="tweet-box">
+<div class="tweet-box is-padding">
 <h2 class="tweet-create">tweet作成</h2>
 <div class="tweet-wrap">
 	{!!Form::open(['route' => 'tweet.store', 'method' => 'post'])!!}
@@ -30,6 +30,7 @@
 		</div>
 		<div class="form-group">
 			<input type="text" class="form-module form-text" name="name" placeholder="タグを記入してください">
+			<input type="hidden" name="count" value=0>
 			<span></span>
 		</div>
 			<input type="submit" class="form-submit" value="post">

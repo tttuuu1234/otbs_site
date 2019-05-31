@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TweetRequest;
 use App\Models\Tweet;
 use App\Models\Tag;
+use App\Models\Weekly;
+use App\Models\Monthly;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\SubCategory;
@@ -26,13 +28,17 @@ class TweetController extends Controller
     public $tag; 
     public $category;
     public $subCategory;
+    public $weekly;
+    public $monthly;
 
-    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory)
+    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory, Weekly $weekly, monthly $monthly)
     {
         $this->tweet = $tweet;
         $this->tag = $tag;
         $this->category = $category;
         $this->subCategory = $subCategory;
+        $this->weekly = $weekly;
+        $this->monthly = $monthly;
         $this->middleware('auth');
     }
 
@@ -45,17 +51,22 @@ class TweetController extends Controller
             $tweets = $this->tweet->searchCategory($inputs); //tweetのインスタンスに対してsearchCategoryを行なっているので、tweetsテーブルの中のcategory_idに対して行う
         } elseif(array_key_exists('tag_id', $inputs)) {
             $tags = $this->tag->find($inputs['tag_id']); //$inputsに格納されているtag_idの値をfindでそのidをしているtagのオブジェクトを取得
-            $tweets= $tags->tweet()->orderby('tag_id', 'desc')->get(); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
-            return view('user.tweet.index', compact('tweets', 'categories', 'inputs'));
+            $weeklyTag = $this->weekly->find($inputs['tag_id']);
+            $monthlyTag = $this->monthly->find($inputs['tag_id']);
+            $weeklyTag->increment('count');
+            $monthlyTag->increment('count');
+            $tweets = $tags->tweet()->orderby('tag_id', 'desc')->get(); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
+            return view('user.tweet.index', compact('tweets', 'categories'));
         } elseif(array_key_exists('subCategory_id', $inputs)){
             $tweets = $this->tweet->searchSubCategory($inputs);
         } else {
             $tweets = $this->tweet->orderby('created_at', 'desc')->get();
         }
         // dd($tweets);
+        // $sortTagCount = $this->tag->sortCount();//count数が多い順の10件を取得
 
 
-        return view('user.tweet.index', compact('tweets', 'categories','inputs'));
+        return view('user.tweet.index', compact('tweets', 'categories'));
     }
 
     /**
@@ -85,7 +96,9 @@ class TweetController extends Controller
 
         $inputs = $request->all();
         $tweet = $this->tweet->fill($inputs)->save();
-        $tag = $this->tag->firstOrCreate(['name' => $inputs['name']]);//firstOrCreate(検索したいレコードのカラム名, 新しくレコードを追加する時に挿入する他のカラムの値)
+        $week = $this->weekly->fill($inputs)->save();
+        $month = $this->monthly->fill($inputs)->save();
+        $tag = $this->tag->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);//firstOrCreate(検索したいレコードのカラム名, 新しくレコードを追加する時に挿入する他のカラムの値)
         $tagId = $tag->id;//tagからidを取得している
         $this->tweet->tag()->attach($tagId); //中間テーブルに保存する処理
         return redirect()->route('tweet.index');
@@ -149,4 +162,5 @@ class TweetController extends Controller
         $comments = $comment->fill($inputs)->save();
         return redirect()->route('tweet.index');
     }
+
 }

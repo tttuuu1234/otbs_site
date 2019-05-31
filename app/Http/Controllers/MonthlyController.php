@@ -1,31 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\LastMonth;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\SubCategory;
 
-class CategoryController extends Controller
+class MonthlyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-     public $category;
-     public $subCategory;
-
-    public function __construct(Category $category, SubCategory $subCategory)
-    {
-        $this->category = $category;
-        $this->subCategory = $subCategory;
-    }
-
     public function index()
     {
-        return view('user.tweet.index');
+        $lastMonth = new lastMonth;
+        $lastMonthTags = $lastMonth->getTagCount();
+        return view('user.monthly.index', compact('lastMonthTags'));
     }
 
     /**
@@ -35,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('user.category.create', compact('categories'));
+        //
     }
 
     /**
@@ -46,9 +37,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->all();
-        $this->category->fill($inputs)->save();
-        return redirect()->route('tweet.index');
+        //
     }
 
     /**

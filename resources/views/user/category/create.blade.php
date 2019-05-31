@@ -1,10 +1,10 @@
 @extends('layout')
 @section('content')
-<div class="category-create">
+<div class="category-create is-padding">
 	{!! Form::open(['route' => 'category.store']) !!}
 		{!! Form::input('text', 'name') !!}
 		<button>post</button>
-	{!! Form::close() !!}	
+	{!! Form::close() !!}
 </div>
 
 @endsection

@@ -1,9 +1,21 @@
 @extends('layout')
 @section('content')
 
-  <div class="tweet-box">
+  <div class="tweet-box is-padding inner">
     <div class="category-box"><a href="{{ route('category.create') }}">カテゴリー</a></div>
-    <nav class="nav inner">
+    <div class="sub-category-box"><a href="{{ route('subCategory.create') }}">サブカテゴリー</a></div>
+
+    <div class="attention-tag">
+      <div class="weekly-tag-count">
+        <a href="{{ route('weekly.index') }}">weekly</a>
+      </div>
+
+      <div class="monthly-tag-count">
+        <a href="{{ route('monthly.index') }}">monthly</a>
+      </div>
+    </div>
+
+    <nav class="nav">
       <ul class="nav__list">
         <li class="nav__list__item nav-category"><a href="{{ route('tweet.index') }}">all</a></li>
         @foreach ($categories as $category)
@@ -41,6 +53,7 @@
         @foreach ($tweet->tag as $tag)
           {!! Form::open(['route' => 'tweet.index', 'method' => 'get']) !!}
             {!! Form::input('hidden', 'tag_id', $tag->id) !!}<!--tweetからtagの情報を引っ張ってきてtagのidを取得している-->
+            {!! Form::input('hidden', 'count', $tag->count) !!}
             {!! Form::input('submit', 'name', $tag->name) !!} 
           {!! Form::close() !!}
         @endforeach

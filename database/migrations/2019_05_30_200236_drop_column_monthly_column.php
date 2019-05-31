@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSubCategoryIdToTweetsTable extends Migration
+class DropColumnMonthlyColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddSubCategoryIdToTweetsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tweets', function (Blueprint $table) {
-            $table->integer('subCategory_id');
+        Schema::table('monthlies', function (Blueprint $table) {
+            $table->dropColumn('monthly');
         });
     }
 
@@ -25,8 +25,8 @@ class AddSubCategoryIdToTweetsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tweets', function (Blueprint $table) {
-            // $table->integer('subCategory_id');
+        Schema::table('monthlies', function (Blueprint $table) {
+            $table->boolean('monthly')->default(false);
         });
     }
 }
