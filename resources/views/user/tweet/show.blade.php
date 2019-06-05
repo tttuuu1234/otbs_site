@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-<div class="tweet-box">	
+<div class="tweet-box is-padding inner">	
   <div class="tweet-header">
     <div class="tweet__name ">{{ $tweets->user->name }}</div>
 	</div>
@@ -24,6 +24,7 @@
 	@foreach ($tweets->comment as $comment)
 		<div class="tweet__comment">{{ $comment->comment }}</div>
 	@endforeach
+	<a href="{{ route('tweet.favorite', $tweets->user->id) }}">お気に入り</a>
   <a href="{{ route('tweet.edit', $tweets->id) }}">編集</a>
   {!! Form::open(['route' => ['tweet.destroy', $tweets->id], 'method' => 'delete']) !!}
     <button>削除</button>

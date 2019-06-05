@@ -4,7 +4,7 @@
 <div class="tweet-box is-padding">
 <h2 class="tweet-create">tweet作成</h2>
 <div class="tweet-wrap">
-	{!!Form::open(['route' => 'tweet.store', 'method' => 'post'])!!}
+	{!!Form::open(['route' => 'tweet.store'])!!}
 		<div class="form-group">
 			<!-- <input class="form-user__id" name="user_id" type="hidden" value = "Auth::id()"> -->
 			{!! Form::input('hidden', 'user_id', Auth::id(), ['class' => 'form-user__id' ])!!}

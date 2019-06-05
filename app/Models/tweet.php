@@ -47,6 +47,11 @@ class Tweet extends Model
         return $this->belongsTo(SubCategory::class, 'subCategory_id');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function scopeEqual($query, $colmnName, $colmnValue)
     {
         if(!empty($colmnValue)) {
@@ -54,6 +59,12 @@ class Tweet extends Model
         }
     }
 
+    public function alreadyExists($tweet)
+    {
+        return $this->equal('user_id', $tweet->user->id)
+                    ->equal('tweet_id', $tweet->id) 
+                    ->exists();
+    }
     public function searchCategory($inputs) 
     {
         return $this->equal('category_id', $inputs['category_id']) //第一引数のカラムに第二引数で指定した値が入っているレコードの指定
@@ -67,5 +78,4 @@ class Tweet extends Model
                     ->orderby('created_at', 'desc')
                     ->get();
     }
-
 }

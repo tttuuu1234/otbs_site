@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\TweetRequest;
+use App\Models\User;
 use App\Models\Tweet;
 use App\Models\Tag;
 use App\Models\Weekly;
@@ -89,11 +90,6 @@ class TweetController extends Controller
      */
     public function store(TweetRequest $request)
     {
-
-        //レコードを1件取得するためにその中の一意なものをwhereで指定する
-        //取得したレコードからidをとる
-        //そのidを元にfindでオブジェクト取得
-
         $inputs = $request->all();
         $tweet = $this->tweet->fill($inputs)->save();
         $week = $this->weekly->fill($inputs)->save();
@@ -161,6 +157,28 @@ class TweetController extends Controller
         $inputs = $request->all();
         $comments = $comment->fill($inputs)->save();
         return redirect()->route('tweet.index');
+    }
+
+    public function like(Request $request)
+    {
+        $inputs = $request->all();
+        // dd($inputs);
+        $tweet = $this->tweet->find($inputs['tweet_id']); //tweet_idを基にtweetのオブジェクトを取得 取得しないと中間テーブルに保存した対象のオブジェクトがないことになりtweet_idを保存できない
+        // dd($tweet);
+        if($tweet->users()->where('user_id', $inputs['user_id'])->where('tweet_id', $tweet->id)->exists()) { //存在するかどうか
+            return redirect()->route('tweet.index');
+        }else{
+            $tweet->users()->attach($inputs['user_id']); //取得したオブジェクトに対してusersメソッドで中間テーブルにアクセスして、attachメソッドを用いて、userIdとtweetIdを保存
+            //なぜ上記のコードでtweetのidも保存できたのか?
+            return redirect()->route('tweet.index');
+        }
+    }
+
+    public function favorite($userId)
+    {
+        $user = new user;
+        $users = $user->find($userId);
+        return view('user.tweet.favorite', compact('users'));
     }
 
 }

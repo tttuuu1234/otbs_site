@@ -19,7 +19,9 @@ Route::get('tweet/{id}/edit', ['as' => 'tweet.edit', 'uses' => 'TweetController@
 Route::put('tweet/{id}/', ['as' => 'tweet.update', 'uses' => 'TweetController@update']);
 Route::delete('tweet/{id}/', ['as' => 'tweet.destroy', 'uses' => 'TweetController@destroy']);
 Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
-Route::get('tweet/tag/count', ['as' => 'tweet.tag.count', 'uses' => 'TweetController@tagCount']);
+// Route::get('tweet/tag/count', ['as' => 'tweet.tag.count', 'uses' => 'TweetController@tagCount']);
+Route::post('tweet/like', ['as' => 'tweet.like', 'uses' => 'TweetController@like']);
+Route::get('tweet/{id}/favorite', ['as' => 'tweet.favorite', 'uses' => 'TweetController@favorite']);
 
 Route::resource('tag', TagController::class);
 Route::resource('weekly', WeeklyController::class);
