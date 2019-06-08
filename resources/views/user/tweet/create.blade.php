@@ -9,7 +9,7 @@
 			<!-- <input class="form-user__id" name="user_id" type="hidden" value = "Auth::id()"> -->
 			{!! Form::input('hidden', 'user_id', Auth::id(), ['class' => 'form-user__id' ])!!}
 			<select name='category_id' class = "form-select" id="pref_id">
-        <option value="">Category</option>
+        <option>Category</option>
         @foreach ($categories as $category)
 					<option value= "{{ $category->id }}">{{ $category->name }}</option>
 				@endforeach

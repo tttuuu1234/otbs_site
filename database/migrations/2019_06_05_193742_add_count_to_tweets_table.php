@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMonthlyToMonthliesTable extends Migration
+class AddCountToTweetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddMonthlyToMonthliesTable extends Migration
      */
     public function up()
     {
-        Schema::table('monthlies', function (Blueprint $table) {
-            $table->string('monthly')->default('monthly');
+        Schema::table('tweets', function (Blueprint $table) {
+            $table->integer('count')->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ class AddMonthlyToMonthliesTable extends Migration
      */
     public function down()
     {
-        Schema::table('monthlies', function (Blueprint $table) {
-            $table->string('monthly')->default('monhly');
+        Schema::table('tweets', function (Blueprint $table) {
+            // $table->integer('count')->default(0);
         });
     }
 }

@@ -21,6 +21,7 @@ class CategoryController extends Controller
     {
         $this->category = $category;
         $this->subCategory = $subCategory;
+        $this->middleware('auth');
     }
 
     public function index()

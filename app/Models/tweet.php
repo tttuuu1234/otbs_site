@@ -14,6 +14,7 @@ class Tweet extends Model
         'user_id',
         'category_id',
         'subCategory_id',
+        'count',
     ];
 
     protected $dates = [
@@ -21,6 +22,8 @@ class Tweet extends Model
         'update_at',
         'deleted_at',
     ];
+
+    
     
     public function tag()
     {
@@ -49,7 +52,7 @@ class Tweet extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('tweet_id');
     }
 
     public function scopeEqual($query, $colmnName, $colmnValue)
@@ -76,6 +79,13 @@ class Tweet extends Model
     {
         return $this->equal('subCategory_id', $inputs['subCategory_id'])
                     ->orderby('created_at', 'desc')
+                    ->get();
+    }
+
+    public function getFavoriteCount()
+    {
+        return $this->orderby('count', 'desc')
+                    ->take(10)
                     ->get();
     }
 }

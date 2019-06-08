@@ -17,35 +17,58 @@
     <div class="otbs-header-wrap inner">
       <div class="otbs-header__title"><a href="{{ route('tweet.index') }}">tsubastagram</a></div>
       <ul class="otbs-header__list">
-        <li><a href="#" class="otbs-header__list__item link__hover"><i class="fas fa-info-circle"></i></a></li>
-        <li><a href="#" class="otbs-header__list__item link__hover"><i class="far fa-envelope-open"></i></a></li>
-        <li><a href="{{route('tweet.create')}}" class="otbs-header__list__item link__hover"><i class="fas fa-plus-square"></i></a></li>
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a class="otbs-header__list__item link__hover" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            @if (Route::has('register'))
-                                <li><a class="otbs-header__list__item link__hover" href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+        <!-- Authentication Links -->
+        @guest
+          <li>
+            <a href="#" class="otbs-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
+            <div class="content__hover">SNS</div>
+          </li>
+          <li>
+            <a href="#" class="otbs-header__list__item link__hover"><i class="far fa-envelope-open"></i></a>
+            <div class="content__hover">contact</div>
+          </li>
+          <li><a class="otbs-header__list__item link__hover" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+        @if (Route::has('register'))
+          <li><a class="otbs-header__list__item link__hover" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+        @endif
+        @else
+          <li>
+            <a href="#" class="otbs-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
+            <div class="content__hover">SNS</div>
+          </li>
+          <li>
+            <a href="#" class="otbs-header__list__item link__hover"><i class="far fa-envelope-open"></i></a>
+            <div class="content__hover">contact</div>
+          </li>
+          <li>
+            <a href="{{route('tweet.create')}}" class="otbs-header__list__item link__hover"><i class="fas fa-plus-square"></i></a>
+            <div class="content__hover">Tweet作成</div>
+          </li>
+          <li>
+            <a href="{{ route('category.create') }}" class="otbs-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
+            <div class="content__hover">カテゴリー作成</div>
+          </li>
+          <li>
+            <a href="{{ route('subCategory.create') }}" class="otbs-header__list__item link__hover"><i class="fas fa-calendar-plus"></i></a>
+            <div class="content__hover">サブカテゴリー作成</div>
+          </li>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-
+          <li>
+            <a class="otbs-header__list__item" href="#">
+              {{ Auth::user()->name }} <span class="caret"></span>
+            </a>
+            
+            <a class="otbs-header__list__item" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+              document.getElementById('logout-form').submit();">
+              {{ __('Logout') }}
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
+          </li>
+        @endguest
+      </ul>
     </div>
   </header>
 

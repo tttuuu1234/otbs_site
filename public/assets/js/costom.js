@@ -10,5 +10,10 @@ $(function(){
         $(this).find('.sub__nav__list').fadeIn();
     }, function(){
         $(this).find('.sub__nav__list').fadeOut();
-    })
+        })
+    
+    $('#like-btn').on('click', function ()
+    {
+        $(this).css('background-color', 'red');
+    })    
 })

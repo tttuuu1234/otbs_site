@@ -25,9 +25,11 @@
 		<div class="tweet__comment">{{ $comment->comment }}</div>
 	@endforeach
 	<a href="{{ route('tweet.favorite', $tweets->user->id) }}">お気に入り</a>
-  <a href="{{ route('tweet.edit', $tweets->id) }}">編集</a>
-  {!! Form::open(['route' => ['tweet.destroy', $tweets->id], 'method' => 'delete']) !!}
-    <button>削除</button>
+	@if(Auth::id() == $tweets->user->id)
+		<a href="{{ route('tweet.edit', $tweets->id) }}">編集</a>
+		{!! Form::open(['route' => ['tweet.destroy', $tweets->id], 'method' => 'delete']) !!}
+		<button>削除</button>
+	@endif	
 	{!! Form::close() !!}
 </div>
 @endsection

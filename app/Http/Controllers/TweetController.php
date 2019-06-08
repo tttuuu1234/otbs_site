@@ -13,7 +13,7 @@ use App\Models\Monthly;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\SubCategory;
-
+use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -56,18 +56,28 @@ class TweetController extends Controller
             $monthlyTag = $this->monthly->find($inputs['tag_id']);
             $weeklyTag->increment('count');
             $monthlyTag->increment('count');
-            $tweets = $tags->tweet()->orderby('tag_id', 'desc')->get(); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
-            return view('user.tweet.index', compact('tweets', 'categories'));
+            $tweets = $tags->tweet()->orderby('tag_id', 'desc')->paginate(20); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
         } elseif(array_key_exists('subCategory_id', $inputs)){
             $tweets = $this->tweet->searchSubCategory($inputs);
         } else {
-            $tweets = $this->tweet->orderby('created_at', 'desc')->get();
+            $tweets = $this->tweet->orderby('created_at', 'desc')->paginate(20);
         }
-        // dd($tweets);
-        // $sortTagCount = $this->tag->sortCount();//count数が多い順の10件を取得
 
+        $favorite = new favorite;
+        $favoriteTweets = $this->tweet->getFavoriteCount();
 
-        return view('user.tweet.index', compact('tweets', 'categories'));
+        for($i = 0; $i < 10; $i++) {
+            $favoriteTweet = $favoriteTweets[$i];
+            $favorite->find($i + 1)->update([
+                'user_id' => $favoriteTweet->user_id,
+                'content' => $favoriteTweet->content,
+                'category_id' => $favoriteTweet->category_id,
+                'subCategory_id' => $favoriteTweet->subCategory_id,
+                'count' => $favoriteTweet->count,
+            ]);
+        }
+        $favorites = $favorite->getFavoriteCount();
+        return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
     }
 
     /**
@@ -162,14 +172,17 @@ class TweetController extends Controller
     public function like(Request $request)
     {
         $inputs = $request->all();
-        // dd($inputs);
-        $tweet = $this->tweet->find($inputs['tweet_id']); //tweet_idを基にtweetのオブジェクトを取得 取得しないと中間テーブルに保存した対象のオブジェクトがないことになりtweet_idを保存できない
+        $tweet = $this->tweet->find($inputs['tweet_id']);
         // dd($tweet);
+         //tweet_idを基にtweetのオブジェクトを取得 取得しないと中間テーブルに保存した対象のオブジェクトがないことになりtweet_idを保存できない
         if($tweet->users()->where('user_id', $inputs['user_id'])->where('tweet_id', $tweet->id)->exists()) { //存在するかどうか
+            $tweet->users()->detach(); //中間テーブルから送られてきたオブジェクトを削除
+            $tweet->decrement('count');//countカラムの値を1減らす
             return redirect()->route('tweet.index');
         }else{
             $tweet->users()->attach($inputs['user_id']); //取得したオブジェクトに対してusersメソッドで中間テーブルにアクセスして、attachメソッドを用いて、userIdとtweetIdを保存
             //なぜ上記のコードでtweetのidも保存できたのか?
+            $tweet->increment('count'); //中間テーブルに保存されたらtweetオブジェクトのcountカラムに1追加
             return redirect()->route('tweet.index');
         }
     }

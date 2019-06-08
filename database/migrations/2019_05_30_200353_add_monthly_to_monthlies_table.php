@@ -26,7 +26,7 @@ class AddMonthlyToMonthliesTable extends Migration
     public function down()
     {
         Schema::table('monthlies', function (Blueprint $table) {
-            $table->string('monthly')->default('monthly');
+            // $table->string('monthly')->default('monthly');
         });
     }
 }

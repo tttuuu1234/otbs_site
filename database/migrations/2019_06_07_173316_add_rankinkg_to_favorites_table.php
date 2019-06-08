@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddWeeklyToWeekliesTable extends Migration
+class AddRankinkgToFavoritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddWeeklyToWeekliesTable extends Migration
      */
     public function up()
     {
-        Schema::table('weeklies', function (Blueprint $table) {
-            $table->string('weekly');
+        Schema::table('favorites', function (Blueprint $table) {
+            $table->integer('ranking');
         });
     }
 
@@ -25,8 +25,8 @@ class AddWeeklyToWeekliesTable extends Migration
      */
     public function down()
     {
-        Schema::table('weeklies', function (Blueprint $table) {
-            $table->string('weekly');
+        Schema::table('favorites', function (Blueprint $table) {
+            //
         });
     }
 }

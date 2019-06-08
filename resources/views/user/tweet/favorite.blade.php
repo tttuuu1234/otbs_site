@@ -6,8 +6,8 @@
 		<div class="favorite__user__name">
 			{{ $users->name }}のお気に入り
 		</div>
-		@foreach ($users->tweets as $user)
-			{{ $user->content }}
+		@foreach ($users->tweets as $tweet)
+			{{ $tweet->content }}
 		@endforeach
 
 	</div>

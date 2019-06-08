@@ -46,7 +46,7 @@ class WeeklyTagUpdate extends Command
 
         for($i = 0; $i < 10; $i++) {
             $week = $weeklyTagCounts[$i]; //$weeklyTagCountsの配列の0番目から
-            $lastWeek->find($i + 1)->update([ //$lastWeekモデルのidの1からupdateさせてる 2,3と増えていく
+            $lastWeek->find($i + 1)->update([ //$lastWeekモデルのidの1からupdateさせてる 2,3と増えていく 最初は初期データを入れている
                 'name' => $week->name,
                 'count' => $week->count,
                 'updated_at' => $week->updated_at,

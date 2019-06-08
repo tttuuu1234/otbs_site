@@ -26,7 +26,7 @@ class AddWeeklyToWeekliesTable extends Migration
     public function down()
     {
         Schema::table('weeklies', function (Blueprint $table) {
-            $table->string('weekly')->default('weekly');
+            // $table->string('weekly')->default('weekly');
         });
     }
 }
