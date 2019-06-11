@@ -11,45 +11,6 @@
 			</div>
 		{!!Form::close()!!}
 	</div>
-
-<!-- <li class="nav__list__item">
-          <a href="#">all</a>
-          <ul class="nav__contents__list">
-            <li class="nav__contents is-hidden"><a href="#">hello</a></li>
-          </ul>  
-        </li>
-        <li class="nav__list__item">
-          <a href="#">エンタメ</a>
-          <ul class="nav__contents__list">
-            <li class="nav__contents is-hidden"><a href="#">hello</a></li>
-          </ul>  
-        </li>
-        <li class="nav__list__item">
-          <a href="#">スポーツ</a>
-          <ul class="nav__contents__list">
-            <li class="nav__contents is-hidden"><a href="#">やりたい</a></li>
-          </ul>  
-        </li>
-        <li class="nav__list__item">
-          <a href="#">お笑い</a>
-          <ul class="nav__contents__list">
-            <li class="nav__contents is-hidden"><a href="#">面白くない</a></li>
-          </ul>  
-        </li>
-        <li class="nav__list__item">
-          <a href="#">美人</a>
-          <ul class="nav__contents__list">
-            <li class="nav__contents is-hidden"><a href="#">会いたい</a></li>
-          </ul>  
-        </li>
-        <li class="nav__list__item">
-          <a href="#">麻美ゆま</a>
-          <ul class="nav__contents__list">
-            <li class="nav__contents is-hidden"><a href="#">神だ</a></li>
-          </ul>  
-        </li>
- -->
-
-  </div>
+</div>
 
 @endsection

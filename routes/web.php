@@ -21,11 +21,15 @@ Route::delete('tweet/{id}/', ['as' => 'tweet.destroy', 'uses' => 'TweetControlle
 Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
 Route::post('tweet/like', ['as' => 'tweet.like', 'uses' => 'TweetController@like']);
 Route::get('tweet/{id}/favorite', ['as' => 'tweet.favorite', 'uses' => 'TweetController@favorite']);
+Route::get('tweet/category/{id}', ['as' => 'category.index', 'uses' => 'CategoryController@index']);
+Route::get('tweet/subcategory/{id}', ['as' => 'subcategory.index', 'uses' => 'SubCategoryController@index']);
+Route::get('tweet/tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
 
+Route::resource('daily', DayController::class, ['only' => ['index']]);
 Route::resource('weekly', WeeklyController::class, ['only' => ['index']]);
 Route::resource('monthly', MonthlyController::class, ['only' => ['index']]);
-Route::resource('category', CategoryController::class, ['only' => ['index', 'create', 'store']]);
-Route::resource('subCategory', SubCategoryController::class, ['only' => ['index', 'create', 'store']]);
+Route::resource('category', CategoryController::class, ['only' => ['create', 'store']]);
+Route::resource('subCategory', SubCategoryController::class, ['only' => ['create', 'store']]);
 
 
 Route::auth();

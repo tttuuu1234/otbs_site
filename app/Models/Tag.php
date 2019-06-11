@@ -22,4 +22,5 @@ class Tag extends Model
                     ->take(10)
                     ->get();
     }
+    
 }

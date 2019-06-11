@@ -13,4 +13,9 @@ class Category extends Model
         return $this->hasMany(SubCategory::class);
     }
 
+    public function tweet()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRankinkgToFavoritesTable extends Migration
+class AddDailyToDaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddRankinkgToFavoritesTable extends Migration
      */
     public function up()
     {
-        Schema::table('favorites', function (Blueprint $table) {
-            // $table->integer('ranking');
+        Schema::table('days', function (Blueprint $table) {
+            $table->string('daily')->default('daily');
         });
     }
 
@@ -25,7 +25,7 @@ class AddRankinkgToFavoritesTable extends Migration
      */
     public function down()
     {
-        Schema::table('favorites', function (Blueprint $table) {
+        Schema::table('days', function (Blueprint $table) {
             //
         });
     }

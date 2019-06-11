@@ -3,20 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Weekly;
+use App\Services\TagCounts;
 
 class LastMonth extends Model
 {
+    use TagCounts;
     protected $fillable = [
         'name',
         'count',
     ];
-
-    public function getTagCount()
-    {
-        return $this->orderby('count', 'desc')
-                    ->take(10)
-                    ->get();
-    }
 
 }

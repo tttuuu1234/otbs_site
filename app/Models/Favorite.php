@@ -21,4 +21,16 @@ class Favorite extends Model
                     ->get();
     }
 
+    public function favoriteUpdate($i, $favoriteTweet) 
+    {
+
+        $this->find($i + 1)->update([
+            'user_id' => $favoriteTweet->user_id,
+            'content' => $favoriteTweet->content,
+            'category_id' => $favoriteTweet->category_id,
+            'subCategory_id' => $favoriteTweet->subCategory_id,
+            'count' => $favoriteTweet->count,
+        ]);
+    }
+
 }

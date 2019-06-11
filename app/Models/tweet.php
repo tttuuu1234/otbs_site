@@ -52,7 +52,7 @@ class Tweet extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('tweet_id');
+        return $this->belongsToMany(User::class);
     }
 
     public function scopeEqual($query, $colmnName, $colmnValue)
@@ -68,18 +68,18 @@ class Tweet extends Model
                     ->equal('tweet_id', $tweet->id) 
                     ->exists();
     }
-    public function searchCategory($inputs) 
+    public function searchCategory($categoryid) 
     {
-        return $this->equal('category_id', $inputs['category_id']) //第一引数のカラムに第二引数で指定した値が入っているレコードの指定
+        return $this->equal('category_id', $categoryid) //第一引数のカラムに第二引数で指定した値が入っているレコードの指定
                     ->orderby('created_at', 'desc')
-                    ->get();
+                    ->paginate(20);
     }
 
-    public function searchSubCategory($inputs)
+    public function searchSubCategory($subCategoryid)
     {
-        return $this->equal('subCategory_id', $inputs['subCategory_id'])
+        return $this->equal('subCategory_id', $subCategoryid)
                     ->orderby('created_at', 'desc')
-                    ->get();
+                    ->paginate(20);
     }
 
     public function getFavoriteCount()

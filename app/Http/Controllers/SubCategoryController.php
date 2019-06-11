@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 use App\Models\Category;
+use App\Models\Tweet;
+use App\Models\Favorite;
 
 class SubCategoryController extends Controller
 {
@@ -14,14 +16,32 @@ class SubCategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
+    public $category;
+    public $tweet;
+
+    public function __construct(Category $category, Tweet $tweet, SubCategory $subCategory)
     {
+        $this->category = $category;
+        $this->tweet = $tweet;
+        $this->subcategory = $subCategory;
         $this->middleware('auth');
     }
      
-    public function index()
+    public function index($subCategoryId)
     {
-        return view('user.tweet.index');
+        $categories = $this->category->all();
+        $tweets = $this->tweet->searchSubCategory($subCategoryId);
+
+        $favorite = new favorite;
+        $favoriteTweets = $this->tweet->getFavoriteCount();
+
+        for($i = 0; $i < 10; $i++) {
+            $favoriteTweet = $favoriteTweets[$i];
+            $favorite->favoriteUpdate($i, $favoriteTweet);
+        }
+        $favorites = $favorite->getFavoriteCount();
+        return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
+
     }
 
     /**
@@ -31,8 +51,7 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        $category = new category;
-        $categories = $category->all();
+        $categories = $this->category->all();
         return view('user.subcategory.create', compact('categories'));
     }
 
@@ -45,8 +64,7 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-        $subCategory = new subCategory;
-        $subCategory->fill($inputs)->save();
+        $this->subCategory->fill($inputs)->save();
         return redirect()->route('tweet.index');
     }
 

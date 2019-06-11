@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Category;
 use App\Models\Tweet;
+use App\Models\Tag;
+use App\Models\Weekly;
+use App\Models\Monthly;
+use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\Day;
 use App\Models\Favorite;
 
-class CategoryController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,20 +20,31 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public $category;
-     public $tweet;
-
-    public function __construct(Category $category, Tweet $tweet)
+    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory, Weekly $weekly, monthly $monthly)
     {
-        $this->category = $category;
         $this->tweet = $tweet;
+        $this->tag = $tag;
+        $this->category = $category;
+        $this->subCategory = $subCategory;
+        $this->weekly = $weekly;
+        $this->monthly = $monthly;
         $this->middleware('auth');
     }
 
-    public function index($categoryId)
+    public function index($tagId)
     {
         $categories = $this->category->all();
-        $tweets = $this->tweet->searchCategory($categoryId);//tweetのインスタンスに対してsearchCategoryを行なっているので、tweetsテーブルの中のcategory_idに対して行う
+        $day = new day;
+
+        $tags = $this->tag->find($tagId); //$inputsに格納されているtag_idの値をfindでそのidをしているtagのオブジェクトを取得
+        $weeklyTag = $this->weekly->find($tagId);
+        $monthlyTag = $this->monthly->find($tagId);
+        $dailyTag = $day->find($tagId);
+        $weeklyTag->increment('count');
+        $monthlyTag->increment('count');
+        $this->tag->increment('count');
+        $dailyTag->increment('count');
+        $tweets = $tags->tweet()->orderby('tag_id', 'desc')->paginate(20); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
 
         $favorite = new favorite;
         $favoriteTweets = $this->tweet->getFavoriteCount();
@@ -38,7 +54,8 @@ class CategoryController extends Controller
             $favorite->favoriteUpdate($i, $favoriteTweet);
         }
         $favorites = $favorite->getFavoriteCount();
-        return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
+        return view('user.tweet.index', compact('tweets', 'categories', 'favorites'));
+
     }
 
     /**
@@ -48,7 +65,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('user.category.create');
+        //
     }
 
     /**
@@ -59,9 +76,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->all();
-        $this->category->fill($inputs)->save();
-        return redirect()->route('tweet.index');
+        //
     }
 
     /**

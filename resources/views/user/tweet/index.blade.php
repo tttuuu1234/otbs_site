@@ -7,17 +7,11 @@
         <li class="nav__list__item nav-category"><a href="{{ route('tweet.index') }}">all</a></li>
         @foreach ($categories as $category)
           <li class="nav__list__item">
-            {!! Form::open(['route' => 'tweet.index', 'method' => 'get']) !!} <!--indexにnameを送っている-->
-              {!! Form::input('hidden', 'category_id', $category->id)!!} <!--categoryテーブルに保存されているidを連想配列のkeyに指定-->
-              {!! Form::input('submit', 'name', $category->name, ['class' => 'nav-category'])!!}
-            {!! Form::close() !!}
+            <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
             <div class="sub__nav__list is-hidden">
               <ul class="sub__nav__list__items inner">
                 @foreach ($category->subCategory as $subCategory)
-                  {!! Form::open(['route' => 'tweet.index', 'method' => 'get']) !!} <!--indexにnameを送っている-->
-                    {!! Form::input('hidden', 'subCategory_id', $subCategory->id) !!}
-                    <li class="sub__nav__list__item">{!! Form::input('submit', 'content', $subCategory->content) !!}</li>
-                  {!! Form::close() !!}
+                  <li class="sub__nav__list__item"><a href="{{ route('subcategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
                 @endforeach
               </ul>      
             </div>
@@ -37,6 +31,7 @@
             {!! Form::open(['route' => 'tweet.like']) !!}
               {!! Form::input('hidden', 'tweet_id', $tweet->id ) !!}
               {!! Form::input('hidden', 'user_id', Auth::id() ) !!}
+              {!! Form::input('hidden', 'name', $tweet->user->name ) !!}
               <button type='submit' id="like-btn">
                 <i class="far fa-heart"></i>
               </button>
@@ -47,11 +42,7 @@
             <a href="{{ route('tweet.show', $tweet->id) }}" class="tweet__comment">{{ $tweet->comment->count() }}</a>
             <div class="tweet__tag">
             @foreach ($tweet->tag as $tag)
-              {!! Form::open(['route' => 'tweet.index', 'method' => 'get']) !!}
-                {!! Form::input('hidden', 'tag_id', $tag->id) !!}<!--tweetからtagの情報を引っ張ってきてtagのidを取得している-->
-                <!-- {!! Form::input('hidden', 'count', $tag->count) !!} -->
-                {!! Form::input('submit', 'name', $tag->name) !!} 
-              {!! Form::close() !!}
+                <a href="{{ route('tag.index', $tag->id) }}">{{ $tag->name }}</a><!--tweetからtagの情報を引っ張ってきてtagのidを取得している-->
             @endforeach
             </div>
           </div>
@@ -80,6 +71,10 @@
         </div>
 
         <div class="attention-tag">
+          <div class="day-tag-count">
+            <a href="{{ route('daily.index') }}">今日の注目タグランキング</a>
+          </div>
+        
           <div class="weekly-tag-count">
             <a href="{{ route('weekly.index') }}">週間注目タグランキング</a>
           </div>

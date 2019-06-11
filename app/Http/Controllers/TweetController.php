@@ -10,6 +10,7 @@ use App\Models\Tweet;
 use App\Models\Tag;
 use App\Models\Weekly;
 use App\Models\Monthly;
+use App\Models\Day;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\SubCategory;
@@ -31,8 +32,9 @@ class TweetController extends Controller
     public $subCategory;
     public $weekly;
     public $monthly;
+    public $day;
 
-    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory, Weekly $weekly, monthly $monthly)
+    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory, Weekly $weekly, monthly $monthly, Day $day)
     {
         $this->tweet = $tweet;
         $this->tag = $tag;
@@ -40,41 +42,21 @@ class TweetController extends Controller
         $this->subCategory = $subCategory;
         $this->weekly = $weekly;
         $this->monthly = $monthly;
+        $this->day = $day;
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $inputs = $request->all(); //Formから送られてきた値
-            // dd($inputs);
         $categories = $this->category->all();
-        if(array_key_exists('category_id', $inputs)) {
-            $tweets = $this->tweet->searchCategory($inputs); //tweetのインスタンスに対してsearchCategoryを行なっているので、tweetsテーブルの中のcategory_idに対して行う
-        } elseif(array_key_exists('tag_id', $inputs)) {
-            $tags = $this->tag->find($inputs['tag_id']); //$inputsに格納されているtag_idの値をfindでそのidをしているtagのオブジェクトを取得
-            $weeklyTag = $this->weekly->find($inputs['tag_id']);
-            $monthlyTag = $this->monthly->find($inputs['tag_id']);
-            $weeklyTag->increment('count');
-            $monthlyTag->increment('count');
-            $tweets = $tags->tweet()->orderby('tag_id', 'desc')->paginate(20); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
-        } elseif(array_key_exists('subCategory_id', $inputs)){
-            $tweets = $this->tweet->searchSubCategory($inputs);
-        } else {
-            $tweets = $this->tweet->orderby('created_at', 'desc')->paginate(20);
-        }
-
+        $tweets = $this->tweet->orderby('created_at', 'desc')->paginate(20);
+        
         $favorite = new favorite;
         $favoriteTweets = $this->tweet->getFavoriteCount();
 
         for($i = 0; $i < 10; $i++) {
             $favoriteTweet = $favoriteTweets[$i];
-            $favorite->find($i + 1)->update([
-                'user_id' => $favoriteTweet->user_id,
-                'content' => $favoriteTweet->content,
-                'category_id' => $favoriteTweet->category_id,
-                'subCategory_id' => $favoriteTweet->subCategory_id,
-                'count' => $favoriteTweet->count,
-            ]);
+            $favorite->favoriteUpdate($i, $favoriteTweet);
         }
         $favorites = $favorite->getFavoriteCount();
         return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
@@ -102,8 +84,10 @@ class TweetController extends Controller
     {
         $inputs = $request->all();
         $tweet = $this->tweet->fill($inputs)->save();
-        $week = $this->weekly->fill($inputs)->save();
-        $month = $this->monthly->fill($inputs)->save();
+        $week = $this->weekly->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);
+        $month = $this->monthly->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);
+        $dayly = $this->day->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);
+        // dd($dayly);
         $tag = $this->tag->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);//firstOrCreate(検索したいレコードのカラム名, 新しくレコードを追加する時に挿入する他のカラムの値)
         $tagId = $tag->id;//tagからidを取得している
         $this->tweet->tag()->attach($tagId); //中間テーブルに保存する処理
@@ -191,6 +175,9 @@ class TweetController extends Controller
     {
         $user = new user;
         $users = $user->find($userId);
+        // dd($userId);
+        // $tweets = $this->tweet->users()->where('user_id', $userId)->orderby('id', 'desc')->get();
+        // dd($tweets);
         return view('user.tweet.favorite', compact('users'));
     }
 
