@@ -25,6 +25,7 @@ Route::get('tweet/category/{id}', ['as' => 'category.index', 'uses' => 'Category
 Route::get('tweet/subcategory/{id}', ['as' => 'subcategory.index', 'uses' => 'SubCategoryController@index']);
 Route::get('tweet/tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
 
+Route::get('top', 'TopListController@index')->name('top.index');
 Route::resource('daily', DayController::class, ['only' => ['index']]);
 Route::resource('weekly', WeeklyController::class, ['only' => ['index']]);
 Route::resource('monthly', MonthlyController::class, ['only' => ['index']]);

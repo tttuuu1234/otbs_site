@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropColumnMonthlyMonthliesTable extends Migration
+class AddTweetIdToTopListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DropColumnMonthlyMonthliesTable extends Migration
      */
     public function up()
     {
-        Schema::table('monthlies', function (Blueprint $table) {
-            $table->dropColumn('monthly')->default('monthly');
+        Schema::table('top_lists', function (Blueprint $table) {
+            $table->integer('tweet__id');
         });
     }
 
@@ -25,7 +25,7 @@ class DropColumnMonthlyMonthliesTable extends Migration
      */
     public function down()
     {
-        Schema::table('monthlies', function (Blueprint $table) {
+        Schema::table('top_lists', function (Blueprint $table) {
             //
         });
     }

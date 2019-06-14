@@ -50,7 +50,7 @@ class TweetController extends Controller
     {
         $categories = $this->category->all();
         $tweets = $this->tweet->orderby('created_at', 'desc')->paginate(20);
-        
+
         $favorite = new favorite;
         $favoriteTweets = $this->tweet->getFavoriteCount();
 

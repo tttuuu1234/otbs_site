@@ -15,7 +15,7 @@
 <body class="body">
   <header class="otbs-header">
     <div class="otbs-header-wrap inner">
-      <div class="otbs-header__title"><a href="{{ route('tweet.index') }}">tsubastagram</a></div>
+      <div class="otbs-header__title"><a href="{{route('top.index') }}">ツバシー</a></div>
       <ul class="otbs-header__list">
         <!-- Authentication Links -->
         @guest

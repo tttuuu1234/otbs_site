@@ -22,35 +22,25 @@
 
     <div class="contents">
       <div class="tweet-main">
-        @foreach ($tweets as $tweet)
+        @foreach ($topLists as $topList)
           <div class="tweet-container">
             <div class="tweet-header">
-              <a href="{{ route('tweet.show', $tweet->id) }}" class="tweet__name link__hover">{{ $tweet->user->name }}</a>
+              <a href="{{ route('tweet.show', $topList->tweet__id) }}" class="tweet__name link__hover">{{ $topList->user->name }}</a>
             </div>
-            <div class="tweet__content">{{ $tweet->content }}</div>
+            <div class="tweet__content">{{ $topList->content }}</div>
             {!! Form::open(['route' => 'tweet.like']) !!}
-              {!! Form::input('hidden', 'tweet_id', $tweet->id ) !!}
+              {!! Form::input('hidden', 'tweet_id', $topList->tweet__id ) !!}
               {!! Form::input('hidden', 'user_id', Auth::id() ) !!}
-              {!! Form::input('hidden', 'name', $tweet->user->name ) !!}
+              {!! Form::input('hidden', 'name', $topList->user->name ) !!}
               <button type='submit' id="like-btn">
                 <i class="far fa-heart"></i>
               </button>
             {!! Form::close() !!}
-            <div class="tweet__like__count">{{ $tweet->count }}</div>
-            <div class="tweet__category">{{ $tweet->category->name }}</div>
-            <div class="tweet__sub__category">{{ $tweet->subCategory->content }}</div>
-            <a href="{{ route('tweet.show', $tweet->id) }}" class="tweet__comment">{{ $tweet->comment->count() }}</a>
-            <div class="tweet__tag">
-            @foreach ($tweet->tag as $tag)
-                <a href="{{ route('tag.index', $tag->id) }}">{{ $tag->name }}</a><!--tweetからtagの情報を引っ張ってきてtagのidを取得している-->
-            @endforeach
-            </div>
+            <div class="tweet__like__count">{{ $topList->count }}</div>
+            <div class="tweet__category">{{ $topList->category->name }}</div>
+            <div class="tweet__sub__category">{{ $topList->subCategory->content }}</div>
           </div>
         @endforeach
-
-        <div class="paginate">
-          {{ $tweets->links() }}
-         </div> 
       </div>
 
       <div class="tweet-side">
@@ -71,15 +61,15 @@
         </div>
 
         <div class="attention-tag">
-          <div class="day-tag-count">
+          <div class="day-tag-count is-ranking">
             <a href="{{ route('daily.index') }}">今日の注目タグランキング</a>
           </div>
         
-          <div class="weekly-tag-count">
+          <div class="weekly-tag-count is-ranking">
             <a href="{{ route('weekly.index') }}">週間注目タグランキング</a>
           </div>
 
-          <div class="monthly-tag-count">
+          <div class="monthly-tag-count is-ranking">
             <a href="{{ route('monthly.index') }}">月間注目タグランキング</a>
           </div>
         </div>

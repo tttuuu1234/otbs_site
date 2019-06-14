@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropColumnWeeklyWeekliesTable extends Migration
+class AddNumberToTopListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DropColumnWeeklyWeekliesTable extends Migration
      */
     public function up()
     {
-        Schema::table('weeklies', function (Blueprint $table) {
-            $table->dropColumn('weekly')->default('weekly');
+        Schema::table('top_lists', function (Blueprint $table) {
+            $table->integer('number')->default(0);
         });
     }
 
@@ -25,7 +25,7 @@ class DropColumnWeeklyWeekliesTable extends Migration
      */
     public function down()
     {
-        Schema::table('weeklies', function (Blueprint $table) {
+        Schema::table('top_lists', function (Blueprint $table) {
             //
         });
     }

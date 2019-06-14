@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('monthly:update')
                  ->monthlyOn(1, '8:00'); //毎月1日の10時に行う
 
-        $schedule->command('dayly:update')
+        $schedule->command('daily:update')
                  ->dailyAt('8:00');
     }
 
