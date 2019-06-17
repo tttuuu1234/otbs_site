@@ -7,8 +7,8 @@ trait TagCounts
     public function getTagCount()
     {
         return $this->orderby('count', 'desc')
-        ->take(10)
-        ->get();
+                    ->take(10)
+                    ->get();
     }
 
     public function resetCount()

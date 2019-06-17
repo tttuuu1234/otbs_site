@@ -45,11 +45,12 @@ class MonthlyTagUpdate extends Command
         $monthlyTagCounts = $monthly->getTagCount();
 
         for($i = 0; $i < 10; $i++) {
-            $month = $monthlyTagCounts[$i];
+            $monthlyTag = $monthlyTagCounts[$i];
             $lastMonth->find($i + 1)->update([
-                'name' => $month->name,
-                'count' => $month->count,
-                'updated_at' => $month->updated_at,
+                'name' => $monthlyTag->name,
+                'count' => $monthlyTag->count,
+                'tag_id' => $monthlyTag->id,
+                'updated_at' => $monthlyTag->updated_at,
             ]);
         }
 

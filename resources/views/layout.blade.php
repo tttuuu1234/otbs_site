@@ -72,7 +72,7 @@
     </div>
   </header>
 
-  <main class="otbs-main inner">
+  <main class="inner tweet-box">
 		@yield('content')
   </main>
 </body>

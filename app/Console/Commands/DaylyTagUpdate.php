@@ -42,13 +42,16 @@ class DaylyTagUpdate extends Command
         $dayly = new day;
         $theOtherDay = new theOtherDay;
         $daylyTagCounts = $dayly->getTagCount();
+        // dd($daylyTagCounts);
 
         for($i = 0; $i < 10; $i++) {
-            $daylyTag = $daylyTagCounts[$i];
+            $dailyTag = $daylyTagCounts[$i];
+            // dd($dailyTag->id);
             $theOtherDay->find($i + 1)->update([
-                'name' => $daylyTag->name,
-                'count' => $daylyTag->count,
-                'updated_at' => $daylyTag->updated_at,
+                'name' => $dailyTag->name,
+                'count' => $dailyTag->count,
+                'tag_id' => $dailyTag->id,
+                'updated_at' => $dailyTag->updated_at,
             ]);
         }
 

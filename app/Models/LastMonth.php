@@ -11,6 +11,7 @@ class LastMonth extends Model
     protected $fillable = [
         'name',
         'count',
+        'tag_id',
     ];
 
 }

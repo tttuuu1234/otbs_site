@@ -1,27 +1,26 @@
 @extends('layout')
 @section('content')
-
-  <div class="tweet-box is-padding inner">
-    <nav class="nav">
-      <ul class="nav__list">
-        <li class="nav__list__item nav-category"><a href="{{ route('tweet.index') }}">全記事</a></li>
-        @foreach ($categories as $category)
-          <li class="nav__list__item">
-            <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
-            <div class="sub__nav__list is-hidden">
-              <ul class="sub__nav__list__items inner">
-                @foreach ($category->subCategory as $subCategory)
-                  <li class="sub__nav__list__item"><a href="{{ route('subcategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
-                @endforeach
-              </ul>      
-            </div>
-          </li>     
-        @endforeach
-      </ul>
-    </nav>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__list__item nav-category"><a href="{{ route('tweet.index') }}">全記事</a></li>
+          @foreach ($categories as $category)
+            <li class="nav__list__item">
+              <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
+              <div class="sub__nav__list is-hidden">
+                <ul class="sub__nav__list__items inner">
+                  @foreach ($category->subCategory as $subCategory)
+                    <li class="sub__nav__list__item"><a href="{{ route('subcategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
+                  @endforeach
+                </ul>      
+              </div>
+            </li>     
+          @endforeach
+          <li class="nav__list__item"><a href="{{ route('tag.ranking.daily') }}">ランキング</a></li>
+        </ul>
+      </nav>
 
     <div class="contents">
-      <div class="tweet-main">
+      <div class="main-contents">
         @foreach ($tweets as $tweet)
           <div class="tweet-container">
             <div class="tweet-header">
@@ -53,7 +52,7 @@
          </div> 
       </div>
 
-      <div class="tweet-side">
+      <div class="side-contents">
         <h3 class="side-ranking__title">ランキング総合</h3>
         <p class="side-ranking__read">最近人気のあったニュース</p>
         <div class="side-ranking">
@@ -66,25 +65,8 @@
                 <div class="side-favorite-count is-favprite">{{ $favorite->count }}fav</div>
               </li>
               @endforeach
-
             </ul>
         </div>
-
-        <div class="attention-tag">
-          <div class="day-tag-count">
-            <a href="{{ route('daily.index') }}">今日の注目タグランキング</a>
-          </div>
-        
-          <div class="weekly-tag-count">
-            <a href="{{ route('weekly.index') }}">週間注目タグランキング</a>
-          </div>
-
-          <div class="monthly-tag-count">
-            <a href="{{ route('monthly.index') }}">月間注目タグランキング</a>
-          </div>
-        </div>
-
       </div>
     </div>
-  </div>
 @endsection

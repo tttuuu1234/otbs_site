@@ -11,6 +11,6 @@ class LastWeek extends Model
     protected $fillable = [
         'name',
         'count',
-        'updated_at',
+        'tag_id',
     ];
 }

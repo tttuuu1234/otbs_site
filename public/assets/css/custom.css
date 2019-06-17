@@ -92,6 +92,10 @@ input[type="submit"] {
 .is-hidden {
   display: none;
 }
+
+.tweet-box {
+  padding-top: 80px;
+}
 /* layout */
 
 .nav__list {
@@ -103,7 +107,7 @@ input[type="submit"] {
 
 .nav__list__item {
   font-weight: bold;
-  padding: 0 50px;
+  padding: 0 30px;
   border-left:1px solid darkgray;
 }
 
@@ -138,12 +142,6 @@ input[type="submit"] {
   border-bottom: 2px solid aqua;
 }
 
-
-
-.is-padding {
-  padding-top: 80px;
-}
-
 .category-container {
   display: flex;
   justify-content: space-evenly;
@@ -155,10 +153,14 @@ input[type="submit"] {
   padding: 50px 0;
 }
 
+.main-contents {
+  width: 650px;
+  padding-right: 45px;
+}
+
 .tweet-container {
   border: 2px solid black;
   margin-bottom: 16px;
-  width: 650px;
 }
 
 .tweet__name {
@@ -246,8 +248,8 @@ input[type="submit"] {
   margin-bottom: 36px;
 }
 
-.tweet-side {
-  padding-left: 30px;
+.side-contents {
+  padding: 30px 0 0 0;
   width: 450px;
   box-sizing: border-box;
 }
@@ -309,3 +311,86 @@ input[type="submit"] {
   display: block;
   color: red;
 }
+
+.tag-ranking-header {
+  border: 1px solid black;
+  padding: 24px 12px;
+  margin:46px 0;
+  background-color: peru;
+}
+
+.tag-ranking__title {
+  font-size: 24px;
+  color: #fff;
+}
+
+
+
+.tag-ranking__description {
+  font-size: 14px;
+  margin-top: 16px;
+  color: #fff;
+}
+
+.tag-container {
+  height: 20px;
+  align-items: center;
+  display: flex;
+  border-top: 1px solid #eee;
+  padding: 20px 0;
+}
+
+.tag-number {
+  margin-right: 20px;
+}
+
+.tag-name {
+  font-weight: bold;
+}
+
+.side-border {
+  border-left: 1px solid  #85BACE;
+}
+
+.side-tag-ranking {
+  position: relative;
+}
+
+.fa-crown {
+  position: absolute;
+  color: #FFD700;
+  left: 5%;
+  height: 12px;
+  width: 12px;
+}
+
+.side-ranking-name {
+  position: absolute;
+  left: 12%;
+}
+
+.side-tag-ranking > li{
+  padding: 20px 20px 20px 0;
+  font-weight: bold;
+}
+
+.sub-link-lists {
+  margin: 36px 0 0 24px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.sub-link{
+  color: #85BACE;
+  text-decoration: underline;
+  margin-right: 12px;
+}
+
+.current {
+  border-top: 1px solid #85BACE;
+  border-right: 1px solid #85BACE;
+  border-bottom: 1px solid #85BACE;
+  border-left: 1px solid #fff;
+  margin: 0 0 0 -1px;
+}
+
