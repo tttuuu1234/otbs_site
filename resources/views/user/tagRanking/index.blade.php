@@ -1,24 +1,5 @@
 @extends('layout')
-@section('content')
-<nav class="nav">
-  <ul class="nav__list">
-    <li class="nav__list__item nav-category"><a href="{{ route('tweet.index') }}">全記事</a></li>
-      @foreach ($categories as $category)
-        <li class="nav__list__item">
-          <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
-          <div class="sub__nav__list is-hidden">
-						<ul class="sub__nav__list__items inner">
-							@foreach ($category->subCategory as $subCategory)
-								<li class="sub__nav__list__item"><a href="{{ route('subcategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
-							@endforeach
-						</ul>      
-        	</div>
-        </li>     
-      @endforeach
-    <li class="nav__list__item"><a href="">ランキング</a></li>
-  </ul>
-</nav>
-			
+@section('content')			
 <div class="tag-ranking-header">
 	<div class="tag-header-daily__text">
 		<h2 class="tag-ranking__title">今日のランキング総合</h2> <!--javascriptでtextを月間、週間と変えている？-->

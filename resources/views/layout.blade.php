@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="{{ asset('assets/js/costom.js') }}"></script>
-  <title>tsubastagram</title>
+  <title>ツバシー</title>
 </head>
 <body class="body">
   <header class="otbs-header">
@@ -73,7 +73,27 @@
   </header>
 
   <main class="inner tweet-box">
-		@yield('content')
+    @auth <!--認証されていたら-->
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__list__item"><a href="{{ route('tweet.index') }}">全記事</a></li>
+          @foreach ($categories as $category)
+            <li class="nav__list__item category-link-{{ $category->id }}">
+              <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
+              <div class="sub__nav__list is-hidden">
+                <ul class="sub__nav__list__items category-{{ $category->id }} inner">
+                  @foreach ($category->subCategory as $subCategory)
+                    <li class="sub__nav__list__item"><a href="{{ route('subcategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
+                  @endforeach
+                </ul>      
+              </div>
+            </li>     
+          @endforeach
+          <li class="nav__list__item"><a href="{{ route('tag.ranking.daily') }}">ランキング</a></li>
+        </ul>
+    </nav>
+    @endauth
+    @yield('content')
   </main>
 </body>
 </html>
