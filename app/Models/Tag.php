@@ -16,11 +16,16 @@ class Tag extends Model
         return $this->belongsToMany(Tweet::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function sortCount()
     {
         return $this->orderby('count', 'desc')
                     ->take(10)
                     ->get();
     }
-    
+
 }

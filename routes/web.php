@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('user/{id}', 'TweetController@mypage')->name('tweet.mypage');
 Route::get('/tweet', 'TweetController@index')->name('tweet.index');
 Route::get('tweet/create', 'TweetController@create')->name('tweet.create');
 Route::post('/tweet', 'TweetController@store')->name('tweet.store');
@@ -21,9 +21,9 @@ Route::delete('tweet/{id}/', ['as' => 'tweet.destroy', 'uses' => 'TweetControlle
 Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
 Route::post('tweet/like', ['as' => 'tweet.like', 'uses' => 'TweetController@like']);
 Route::get('tweet/{id}/favorite', ['as' => 'tweet.favorite', 'uses' => 'TweetController@favorite']);
-Route::get('tweet/category/{id}', ['as' => 'category.index', 'uses' => 'CategoryController@index']);
-Route::get('tweet/subcategory/{id}', ['as' => 'subcategory.index', 'uses' => 'SubCategoryController@index']);
-Route::get('tweet/tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
+Route::get('category/{id}', ['as' => 'category.index', 'uses' => 'CategoryController@index']);
+Route::get('subcategory/{id}', ['as' => 'subCategory.index', 'uses' => 'SubCategoryController@index']);
+Route::get('tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
 
 Route::get('top', 'TopListController@index')->name('top.index');
 Route::get('ranking/tag/daily', 'TagRankingController@daily')->name('tag.ranking.daily');

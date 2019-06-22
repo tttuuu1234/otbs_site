@@ -68,16 +68,16 @@ class Tweet extends Model
                     ->equal('tweet_id', $tweet->id) 
                     ->exists();
     }
-    public function searchCategory($categoryid) 
+    public function searchCategory($categoryId) 
     {
-        return $this->equal('category_id', $categoryid) //第一引数のカラムに第二引数で指定した値が入っているレコードの指定
+        return $this->equal('category_id', $categoryId) //第一引数のカラムに第二引数で指定した値が入っているレコードの指定
                     ->orderby('created_at', 'desc')
                     ->paginate(20);
     }
 
-    public function searchSubCategory($subCategoryid)
+    public function searchSubCategory($subCategoryId)
     {
-        return $this->equal('subCategory_id', $subCategoryid)
+        return $this->equal('subCategory_id', $subCategoryId)
                     ->orderby('created_at', 'desc')
                     ->paginate(20);
     }

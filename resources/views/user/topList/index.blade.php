@@ -5,7 +5,7 @@
     @foreach ($topLists as $topList)
       <div class="tweet-container">
         <div class="tweet-header">
-          <a href="{{ route('tweet.show', $topList->tweet__id) }}"class="tweet__name link__hover">{{ $topList->user->name }}</a>
+          <a href="{{ route('tweet.mypage', $topList->user_id) }}"class="tweet__name link__hover">{{ $topList->user->name }}</a>
         </div>
         <div class="tweet__content">{{ $topList->content }}</div>
         {!! Form::open(['route' => 'tweet.like']) !!}

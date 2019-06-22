@@ -34,7 +34,7 @@ class TweetController extends Controller
     public $monthly;
     public $day;
 
-    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory, Weekly $weekly, monthly $monthly, Day $day)
+    public function __construct(Tweet $tweet, Tag $tag, Category $category, SubCategory $subCategory, Weekly $weekly, monthly $monthly, Day $day, Favorite $favorite)
     {
         $this->tweet = $tweet;
         $this->tag = $tag;
@@ -43,6 +43,7 @@ class TweetController extends Controller
         $this->weekly = $weekly;
         $this->monthly = $monthly;
         $this->day = $day;
+        $this->favorite = $favorite;
         $this->middleware('auth');
     }
 
@@ -51,14 +52,8 @@ class TweetController extends Controller
         $categories = $this->category->all();
         $tweets = $this->tweet->orderby('created_at', 'desc')->paginate(20);
 
-        $favorite = new favorite;
-        $favoriteTweets = $this->tweet->getFavoriteCount();
-
-        for($i = 0; $i < 10; $i++) {
-            $favoriteTweet = $favoriteTweets[$i];
-            $favorite->favoriteUpdate($i, $favoriteTweet);
-        }
-        $favorites = $favorite->getFavoriteCount();
+        $this->getFavoriteRanking();
+        $favorites = $this->favorite->getFavoriteCount();
         return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
     }
 
@@ -102,8 +97,13 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-        $tweets = $this->tweet->find($id);
-        return view('user.tweet.show', compact('tweets'));
+        $this->getFavoriteRanking();
+        $favorites = $this->favorite->getFavoriteCount();
+        $categories = $this->category->all();
+        $tweet = $this->tweet->find($id);
+        $categoryId = $tweet->category_id;
+        $category = $this->category->find($categoryId);
+        return view('user.tweet.show', compact('tweet', 'categories', 'category', 'favorites'));
     }
 
     /**
@@ -114,8 +114,9 @@ class TweetController extends Controller
      */
     public function edit($id)
     {
+        $categories = $this->category->all();
         $tweet = $this->tweet->find($id);
-        return view('user.tweet.edit', compact('tweet'));
+        return view('user.tweet.edit', compact('tweet', 'categories'));
     }
 
     /**
@@ -173,12 +174,27 @@ class TweetController extends Controller
 
     public function favorite($userId)
     {
+        $categories = $this->category->all();   
         $user = new user;
         $users = $user->find($userId);
-        // dd($userId);
-        // $tweets = $this->tweet->users()->where('user_id', $userId)->orderby('id', 'desc')->get();
-        // dd($tweets);
-        return view('user.tweet.favorite', compact('users'));
+        return view('user.tweet.favorite', compact('users', 'categories'));
+    }
+
+    public function getFavoriteRanking()
+    {
+        $favoriteTweets = $this->tweet->getFavoriteCount();
+
+        for($i = 0; $i < 10; $i++) {
+            $favoriteTweet = $favoriteTweets[$i];
+            $this->favorite->favoriteUpdate($i, $favoriteTweet);
+        }
+    }
+
+    public function mypage($userId)
+    {
+        $categories = $this->category->all();   
+        $tweets = $this->tweet->where('user_id', $userId)->orderby('updated_at', 'desc')->get();
+        return view('user.tweet.mypage', compact('tweets', 'categories'));
     }
 
 }

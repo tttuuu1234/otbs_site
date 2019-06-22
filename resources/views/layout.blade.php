@@ -83,7 +83,7 @@
               <div class="sub__nav__list is-hidden">
                 <ul class="sub__nav__list__items category-{{ $category->id }} inner">
                   @foreach ($category->subCategory as $subCategory)
-                    <li class="sub__nav__list__item"><a href="{{ route('subcategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
+                    <li class="sub__nav__list__item"><a href="{{ route('subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
                   @endforeach
                 </ul>      
               </div>

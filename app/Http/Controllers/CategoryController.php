@@ -48,7 +48,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('user.category.create');
+        $categories = $this->category->all();        
+        return view('user.category.create', compact('categories'));
     }
 
     /**

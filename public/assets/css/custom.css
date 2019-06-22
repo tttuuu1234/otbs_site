@@ -203,7 +203,7 @@ input[type="submit"] {
 
 .nav__list__item:first-child {
   border-left: none;
-  padding-left: 40px;
+  padding-left: 0;
 }
 
 .sub__nav__list__items {
@@ -276,12 +276,6 @@ input[type="submit"] {
 .category-6 > li > a {
   color: #f39c12;
 }
-
-
-
-
-
-
 
 .category-container {
   display: flex;
