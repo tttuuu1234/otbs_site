@@ -24,8 +24,8 @@
   </div>
 
   <div class="side-contents">
-    <h3 class="side-ranking__title">ランキング総合</h3>
-    <p class="side-ranking__read">最近人気のあったニュース</p>
+    <h3 class="side-ranking__title">記事ランキング総合</h3>
+    <p class="side-ranking__read">最近人気のあった記事</p>
     <div class="side-ranking">
       <ul class="side-inner">
         @foreach ($favorites as $favorite)

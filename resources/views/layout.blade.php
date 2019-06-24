@@ -13,52 +13,52 @@
   <title>ツバシー</title>
 </head>
 <body class="body">
-  <header class="otbs-header">
-    <div class="otbs-header-wrap inner">
-      <div class="otbs-header__title"><a href="{{route('top.index') }}">ツバシー</a></div>
-      <ul class="otbs-header__list">
+  <header class="header">
+    <div class="tweet-header-wrap inner">
+      <div class="tweet-header__title"><a href="{{route('top.index') }}">ツバシー</a></div>
+      <ul class="tweet-header__list">
         <!-- Authentication Links -->
         @guest
           <li>
-            <a href="#" class="otbs-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
+            <a href="#" class="tweet-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
             <div class="content__hover">SNS</div>
           </li>
           <li>
-            <a href="#" class="otbs-header__list__item link__hover"><i class="far fa-envelope-open"></i></a>
+            <a href="#" class="tweet-header__list__item link__hover"><i class="far fa-envelope-open"></i></a>
             <div class="content__hover">contact</div>
           </li>
-          <li><a class="otbs-header__list__item link__hover" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+          <li><a class="tweet-header__list__item link__hover" href="{{ route('login') }}">{{ __('Login') }}</a></li>
         @if (Route::has('register'))
-          <li><a class="otbs-header__list__item link__hover" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+          <li><a class="tweet-header__list__item link__hover" href="{{ route('register') }}">{{ __('Register') }}</a></li>
         @endif
         @else
           <li>
-            <a href="#" class="otbs-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
+            <a href="#" class="tweet-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
             <div class="content__hover">SNS</div>
           </li>
           <li>
-            <a href="#" class="otbs-header__list__item link__hover"><i class="far fa-envelope-open"></i></a>
+            <a href="#" class="tweet-header__list__item link__hover"><i class="far fa-envelope-open"></i></a>
             <div class="content__hover">contact</div>
           </li>
           <li>
-            <a href="{{route('tweet.create')}}" class="otbs-header__list__item link__hover"><i class="fas fa-plus-square"></i></a>
+            <a href="{{route('tweet.create')}}" class="tweet-header__list__item link__hover"><i class="fas fa-plus-square"></i></a>
             <div class="content__hover">Tweet作成</div>
           </li>
           <li>
-            <a href="{{ route('category.create') }}" class="otbs-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
+            <a href="{{ route('category.create') }}" class="tweet-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
             <div class="content__hover">カテゴリー作成</div>
           </li>
           <li>
-            <a href="{{ route('subCategory.create') }}" class="otbs-header__list__item link__hover"><i class="fas fa-calendar-plus"></i></a>
+            <a href="{{ route('subCategory.create') }}" class="tweet-header__list__item link__hover"><i class="fas fa-calendar-plus"></i></a>
             <div class="content__hover">サブカテゴリー作成</div>
           </li>
 
           <li>
-            <a class="otbs-header__list__item" href="#">
+            <a class="tweet-header__list__item" href="#">
               {{ Auth::user()->name }} <span class="caret"></span>
             </a>
             
-            <a class="otbs-header__list__item" href="{{ route('logout') }}"
+            <a class="tweet-header__list__item" href="{{ route('logout') }}"
               onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">
               {{ __('Logout') }}
@@ -75,7 +75,7 @@
   <main class="inner tweet-box">
     @auth <!--認証されていたら-->
       <nav class="nav">
-        <ul class="nav__list">
+        <ul class=" inner nav__list">
           <li class="nav__list__item"><a href="{{ route('tweet.index') }}">全記事</a></li>
           @foreach ($categories as $category)
             <li class="nav__list__item category-link-{{ $category->id }}">
@@ -93,7 +93,19 @@
         </ul>
     </nav>
     @endauth
+
     @yield('content')
   </main>
+
+  <footer class="footer">
+    <div class="tweet-footer-box inner">
+      <div class="tweet-footer__title">ツバシーについて</div>
+      <ul class="tweet-footer__list">
+        <li><a href="#" class="footer__list__item">記事ランキング一覧</a></li>
+        <li><a href="{{ route('tag.ranking.daily') }}" class="footer__list__item">タグランキング一覧</a></li>
+        <li><a href="#" class="footer__list__item">カテゴリ一覧</a></li>
+      </ul>
+    </div>
+  </footer>
 </body>
 </html>

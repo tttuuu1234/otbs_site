@@ -5,7 +5,7 @@
 		<div class="tweet__name ">{{ $tweet->user->name }}</div>
 		<div class="tweet__photo">{{ $tweet->content }}</div>
 		<div class="tweet-mini-box">
-			<a href="#" class="tweet__comment__btn"><i class="far fa-comment"></i></a>
+			<div class="tweet__comment__btn"><i class="far fa-comment"></i></div>
 				<div class="comment-modal is-hidden">
 					<div class="comment-text">
 						{!! Form::open(['route' => 'comment.create']) !!} 

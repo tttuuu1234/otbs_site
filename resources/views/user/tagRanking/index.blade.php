@@ -5,14 +5,6 @@
 		<h2 class="tag-ranking__title">今日のランキング総合</h2> <!--javascriptでtextを月間、週間と変えている？-->
 		<p class="tag-ranking__description">1日間のツバシー全タグ中のユーザーに最も人気になったタグです！気になったタグを是非検索してみしてみませんか？</p>
 	</div>
-	<div class="tag-header-weekly__text">
-		<h2 class="tag-ranking__title">週間のランキング総合</h2> <!--javascriptでtextを月間、週間と変えている？-->
-		<p class="tag-ranking__description">1週間のツバシー全タグ中のユーザーに最も人気になったタグです！気になったタグを是非検索してみしてみませんか？</p>
-	</div>
-	<div class="tag-header-monthly__text">
-		<h2 class="tag-ranking__title">月間のランキング総合</h2> <!--javascriptでtextを月間、週間と変えている？-->
-		<p class="tag-ranking__description">1ヶ月間のツバシー全タグ中のユーザーに最も人気になったタグです！気になったタグを是非検索してみしてみませんか？</p>
-	</div>
 </div>
 
 
