@@ -7,7 +7,6 @@
 	</div>
 </div>
 
-
 <div class="contents">
 	<div class="main-contents">
 		@if(!empty($theOtherDaysTagCounts))

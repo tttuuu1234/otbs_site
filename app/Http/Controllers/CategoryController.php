@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\subCategory;
 use App\Models\Tweet;
 use App\Models\Favorite;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -16,11 +18,13 @@ class CategoryController extends Controller
      */
 
      public $category;
+     public $subCategory;
      public $tweet;
 
-    public function __construct(Category $category, Tweet $tweet)
+    public function __construct(Category $category, Tweet $tweet, SubCategory $subCategory)
     {
         $this->category = $category;
+        $this->subCategory = $subCategory;
         $this->tweet = $tweet;
         $this->middleware('auth');
     }
@@ -58,55 +62,18 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $inputs = $request->all();
         $this->category->fill($inputs)->save();
         return redirect()->route('tweet.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function categoryList()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $categoryLists = $this->category->all();
+        $categories = $this->category->all();
+        $subCategoryLists = $this->subCategory->all();
+        return view('user.category.index', compact('categoryLists', 'subCategoryLists', 'categories'));
     }
 }

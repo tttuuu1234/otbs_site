@@ -7,6 +7,7 @@ use App\Models\SubCategory;
 use App\Models\Category;
 use App\Models\Tweet;
 use App\Models\Favorite;
+use App\Http\Requests\SubCategoryRequest;
 
 class SubCategoryController extends Controller
 {
@@ -41,7 +42,6 @@ class SubCategoryController extends Controller
         }
         $favorites = $favorite->getFavoriteCount();
         return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
-
     }
 
     /**
@@ -61,7 +61,7 @@ class SubCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubCategoryRequest $request)
     {
         $inputs = $request->all();
         $this->subCategory->fill($inputs)->save();

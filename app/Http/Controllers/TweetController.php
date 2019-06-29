@@ -154,18 +154,16 @@ class TweetController extends Controller
         return redirect()->route('tweet.index');
     }
 
-    public function like(Request $request)
+    public function like($id)
     {
-        $inputs = $request->all();
-        $tweet = $this->tweet->find($inputs['tweet_id']);
-        // dd($tweet);
+        $tweet = $this->tweet->find($id);
          //tweet_idを基にtweetのオブジェクトを取得 取得しないと中間テーブルに保存した対象のオブジェクトがないことになりtweet_idを保存できない
-        if($tweet->users()->where('user_id', $inputs['user_id'])->where('tweet_id', $tweet->id)->exists()) { //存在するかどうか
+        if($tweet->users()->where('user_id', $tweet->user_id)->where('tweet_id', $tweet->id)->exists()) { //存在するかどうか
             $tweet->users()->detach(); //中間テーブルから送られてきたオブジェクトを削除
             $tweet->decrement('count');//countカラムの値を1減らす
             return redirect()->route('tweet.index');
         }else{
-            $tweet->users()->attach($inputs['user_id']); //取得したオブジェクトに対してusersメソッドで中間テーブルにアクセスして、attachメソッドを用いて、userIdとtweetIdを保存
+            $tweet->users()->attach($tweet->user_id); //取得したオブジェクトに対してusersメソッドで中間テーブルにアクセスして、attachメソッドを用いて、userIdとtweetIdを保存
             //なぜ上記のコードでtweetのidも保存できたのか?
             $tweet->increment('count'); //中間テーブルに保存されたらtweetオブジェクトのcountカラムに1追加
             return redirect()->route('tweet.index');
@@ -192,9 +190,11 @@ class TweetController extends Controller
 
     public function mypage($userId)
     {
+        $user = new user;
         $categories = $this->category->all();   
-        $tweets = $this->tweet->where('user_id', $userId)->orderby('updated_at', 'desc')->get();
-        return view('user.tweet.mypage', compact('tweets', 'categories'));
+        $tweets = $this->tweet->where('user_id', $userId)->orderby('updated_at', 'desc')->paginate(10);
+        $AuthUser = $user->find($userId);
+        return view('user.tweet.mypage', compact('tweets', 'categories', 'AuthUser'));
     }
 
 }

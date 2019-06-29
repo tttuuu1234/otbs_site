@@ -3,28 +3,25 @@
 <div class="contents">
   <div class="main-contents">
     @foreach ($topLists as $topList)
-      <div class="tweet-container">
-        <div class="tweet-header">
-          <a href="{{ route('tweet.mypage', $topList->user_id) }}"class="tweet__name link__hover">{{ $topList->user->name }}</a>
+      <div class="tweet">
+        <div class="tweet-header tweet-module"><a href="{{ route('tweet.mypage', $topList->user_id) }}"class="tweet__name link__hover">{{ $topList->user->name }}</a></div>
+        <div class="tweet__content tweet-module">{{ $topList->content }}</div>
+        <div class="tweet-module"><a href="{{ route('tweet.like', $topList->id) }}" class="tweet__like"><i class="far fa-heart"></i></a>{{ $topList->count }}</div>
+        <div class="tweet__category tweet-module">
+          <div class="name">メインカテゴリー<i class="far fa-hand-point-right"></i></div>
+          <a href="{{ route('category.index', $topList->category_id) }}">{{ $topList->category->name }}</a>
         </div>
-        <div class="tweet__content">{{ $topList->content }}</div>
-        {!! Form::open(['route' => 'tweet.like']) !!}
-        {!! Form::input('hidden', 'tweet_id', $topList->tweet__id ) !!}
-        {!! Form::input('hidden', 'user_id', Auth::id() ) !!}
-        {!! Form::input('hidden', 'name', $topList->user->name ) !!}
-        <button type='submit' id="like-btn">
-          <i class="far fa-heart"></i>
-        </button>
-        {!! Form::close() !!}
-        <div class="tweet__like__count">{{ $topList->count }}</div>
-        <div class="tweet__category">{{ $topList->category->name }}</div>
-        <div class="tweet__sub__category">{{ $topList->subCategory->content }}</div>
+        <div class="tweet__category tweet-module">
+          <div class="name">サブカテゴリー<i class="far fa-hand-point-right"></i></div>
+          <a href="{{ route('subCategory.index', $topList->subCategory_id) }}">{{ $topList->subCategory->content }}</a>
+        </div>
       </div>
+ 
     @endforeach
   </div>
 
   <div class="side-contents">
-    <h3 class="side-ranking__title">記事ランキング総合</h3>
+    <h3 class="side-ranking__title">お気に入りランキング総合</h3>
     <p class="side-ranking__read">最近人気のあった記事</p>
     <div class="side-ranking">
       <ul class="side-inner">

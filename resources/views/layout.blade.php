@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="{{ asset('assets/js/costom.js') }}"></script>
-  <title>ツバシー</title>
+  <title>Spit learning</title>
 </head>
 <body class="body">
   <header class="header">
     <div class="tweet-header-wrap inner">
-      <div class="tweet-header__title"><a href="{{route('top.index') }}">ツバシー</a></div>
+      <div class="tweet-header__title"><a href="{{route('top.index') }}">Spit learning</a></div>
       <ul class="tweet-header__list">
         <!-- Authentication Links -->
         @guest
@@ -45,7 +45,7 @@
             <div class="content__hover">Tweet作成</div>
           </li>
           <li>
-            <a href="{{ route('category.create') }}" class="tweet-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
+            <a href="{{ route('categorize.create') }}" class="tweet-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
             <div class="content__hover">カテゴリー作成</div>
           </li>
           <li>
@@ -54,7 +54,7 @@
           </li>
 
           <li>
-            <a class="tweet-header__list__item" href="#">
+            <a class="tweet-header__list__item" href="{{ route('tweet.mypage', Auth::user()->id) }}">
               {{ Auth::user()->name }} <span class="caret"></span>
             </a>
             
@@ -93,7 +93,7 @@
         </ul>
     </nav>
     @endauth
-
+    
     @yield('content')
   </main>
 
@@ -101,9 +101,9 @@
     <div class="tweet-footer-box inner">
       <div class="tweet-footer__title">ツバシーについて</div>
       <ul class="tweet-footer__list">
-        <li><a href="#" class="footer__list__item">記事ランキング一覧</a></li>
+        <li><a href="#" class="footer__list__item">お気に入りランキング一覧</a></li>
         <li><a href="{{ route('tag.ranking.daily') }}" class="footer__list__item">タグランキング一覧</a></li>
-        <li><a href="#" class="footer__list__item">カテゴリ一覧</a></li>
+        <li><a href="{{ route('category.list') }}" class="footer__list__item">カテゴリ一覧</a></li>
       </ul>
     </div>
   </footer>
