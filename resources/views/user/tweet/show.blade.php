@@ -2,10 +2,11 @@
 @section('content')
 <div class="contents">
 	<div class="main-contents">
-		<div class="tweet__name ">{{ $tweet->user->name }}</div>
-		<div class="tweet__photo">{{ $tweet->content }}</div>
-		<div class="tweet-mini-box">
-			<a href="#" class="tweet__comment__btn"><i class="far fa-comment"></i></a>
+		<div class="tweet__name tweet-module">{{ $tweet->user->name }}</div>
+		<div class="tweet__content tweet-module">{{ $tweet->content }}</div>
+		<div class="tweet-inner">
+			<div class="tweet__like"><a href="{{ route('tweet.like', $tweet->id) }}"><i class="far fa-heart"></i></a>{{ $tweet->count }}</div>
+			<div class="tweet__comment-btn tweet-module"><i class="far fa-comment"></i></div>
 				<div class="comment-modal is-hidden">
 					<div class="comment-text">
 						{!! Form::open(['route' => 'comment.create']) !!} 
@@ -17,29 +18,40 @@
 						<input type="submit" class="form-submit modal-close" value="close">
 					</div>
 				</div>
-				{!! Form::open(['route' => 'tweet.like']) !!}
-					{{ Form::input('hidden', 'tweet_id', $tweet->id) }}
-					{{ Form::input('hidden', 'user_id', Auth::id()) }}
-          <button type='submit' id="like-btn"><i class="far fa-heart"></i></button>
-				{!! Form::close() !!}
-				<div class="tweet__like__count">{{ $tweet->count }}</div>
-		</div>				
-		@foreach ($tweet->comment as $comment)
-			<div class="tweet__comment">{{ $comment->comment }}</div>
-		@endforeach
-		<a href="{{ route('tweet.favorite', $tweet->user->id) }}">お気に入り</a>
+				<div class="tweet__favorite"><a href="{{ route('tweet.favorite', $tweet->user->id) }}"><i class="far fa-star"></i></a></div>
+		</div>
 		@if(Auth::id() == $tweet->user->id)
-			<a href="{{ route('tweet.edit', $tweet->id) }}">編集</a>
+		<div class="auth-area tweet-module">
+			<div class="tweet-edit"><a href="{{ route('tweet.edit', $tweet->id) }}"><button class="btn-edit">編集</button></a></div>
 			{!! Form::open(['route' => ['tweet.destroy', $tweet->id], 'method' => 'delete']) !!}
-			<button>削除</button>
+				{!! Form::input('submit', 'submit', '削除', ['class' => 'btn-delete']) !!}
 			{!! Form::close() !!}
+		</div>
 		@endif
 
-		<ul class="sub-category-box">
-			@foreach ($category->subCategory as $subCategory)
-				<li><a href="{{ route('subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
-			@endforeach	
+		<ul class="category-lists">
+			<div class="tweet__category tweet-module">
+				<div class="name">メインカテゴリー<i class="far fa-hand-point-right"></i></div>
+				<a href="{{ route('category.index', $tweet->category_id) }}">{{ $tweet->category->name }}</a>
+			</div>
+			<div class="tweet__category tweet-module">
+				<div class="name">サブカテゴリー<i class="far fa-hand-point-right"></i></div>
+				<a href="{{ route('subCategory.index', $tweet->subCategory_id) }}">{{ $tweet->subCategory->content }}</a>
+			</div>
 		</ul>
+
+		@if(!empty($tweet->comment))
+		<div class="tweet-module">
+			<div class="comments" id="comment-counts">{{ $tweet->comment->count() }}件のコメントを表示</div>
+			<div class="comment-area">
+				@foreach ($tweet->comment as $comment)
+					<div class="comment__name">{{ $comment->user->name }}</div>
+					<div class="tweet__comment tweet-module">{{ $comment->comment }}</div>
+				@endforeach
+			</div>
+		</div>
+		@endif
+
 	</div>
 
 	<div class="side-contents">
