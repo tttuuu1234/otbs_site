@@ -1,9 +1,9 @@
-@extends('layout')
+@extends('noSideContentsLayout')
 @section('content')
 
 <div class="contents">
   <div class="categories inner">
-		<div class="categories__title"><h2>カテゴリー覧</h2></div>
+		<div class="categories__title">カテゴリー覧</div>
 		<div class="category-box">
 			<p class="category__title">メインカテゴリー</p>
 			<div class="category-links">

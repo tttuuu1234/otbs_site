@@ -15,7 +15,7 @@
 <body class="body">
   <header class="header">
     <div class="tweet-header-wrap inner">
-      <div class="tweet-header__title"><a href="{{route('top.index') }}">Spit learning</a></div>
+      <div class="tweet-header__title"><a href="{{route('tweet.index') }}">Spit learning</a></div>
       <ul class="tweet-header__list">
         <!-- Authentication Links -->
         @guest
@@ -73,33 +73,53 @@
   </header>
 
   <main class="inner tweet-box">
-    @auth <!--認証されていたら-->
-      <nav class="nav">
-        <ul class=" inner nav__list">
-          <li class="nav__list__item"><a href="{{ route('tweet.index') }}">全記事</a></li>
-          @foreach ($categories as $category)
-            <li class="nav__list__item category-link-{{ $category->id }}">
-              <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
-              <div class="sub__nav__list is-hidden">
-                <ul class="sub__nav__list__items category-{{ $category->id }} inner">
-                  @foreach ($category->subCategory as $subCategory)
-                    <li class="sub__nav__list__item"><a href="{{ route('subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
-                  @endforeach
-                </ul>      
-              </div>
-            </li>     
-          @endforeach
-          <li class="nav__list__item"><a href="{{ route('tag.ranking.daily') }}">ランキング</a></li>
-        </ul>
-    </nav>
+    @auth <!--認証されていたら-->  
+        @if(isset($categories))
+          <nav class="nav">
+            <ul class=" inner nav__list">
+              <li class="nav__list__item"><a href="{{ route('tweet.index') }}">全記事</a></li>
+              @foreach ($categories as $category)
+                <li class="nav__list__item category-link-{{ $category->id }}">
+                  <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
+                  <div class="sub__nav__list is-hidden">
+                    <ul class="sub__nav__list__items category-{{ $category->id }} inner">
+                      @foreach ($category->subCategory as $subCategory)
+                        <li class="sub__nav__list__item"><a href="{{ route('subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
+                      @endforeach
+                    </ul>      
+                  </div>
+                </li>     
+              @endforeach
+              <li class="nav__list__item"><a href="{{ route('tag.ranking.daily') }}">ランキング</a></li>
+            </ul>
+        </nav>
+        @endif
+      <div class="contents">
+        @yield('content')
+        <div class="side-contents">
+          <h3 class="side-ranking__title">お気に入りランキング総合</h3>
+          <p class="side-ranking__read">最近人気のあった記事</p>
+          <div class="side-ranking">
+            <ul class="side-inner">
+            @if(isset($favorites))
+            @foreach ($favorites as $favorite)
+              <li class="side-favorite-list">
+                <div class="side-favorite-rank is-favorite">{{ $favorite->ranking }}位</div>
+                <div class="side-favorite-content is-favorite">{{ $favorite->content }}</div>
+                <div class="side-favorite-count is-favprite">{{ $favorite->count }}fav</div>
+              </li>
+              @endforeach
+            @endif  
+            </ul>
+          </div>
+        </div>
+      </div>
     @endauth
-    
-    @yield('content')
   </main>
 
   <footer class="footer">
     <div class="tweet-footer-box inner">
-      <div class="tweet-footer__title">ツバシーについて</div>
+      <div class="tweet-footer__title">Spit learningについて</div>
       <ul class="tweet-footer__list">
         <li><a href="#" class="footer__list__item">お気に入りランキング一覧</a></li>
         <li><a href="{{ route('tag.ranking.daily') }}" class="footer__list__item">タグランキング一覧</a></li>

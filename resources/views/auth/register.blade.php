@@ -12,8 +12,8 @@
 						<p class="regist-title">名前</p>
 						<span class="required">必須</span>
 					</div>
-						<div class="col-md-6">
-								<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+						<div class="col-md-6 form-register-text">
+								<input id="name" type="text" class=" @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
 								@error('name')
 										<span class="invalid-feedback" role="alert">

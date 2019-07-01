@@ -33,15 +33,7 @@ class SubCategoryController extends Controller
         $categories = $this->category->all();
         $tweets = $this->tweet->searchSubCategory($subCategoryId);
 
-        $favorite = new favorite;
-        $favoriteTweets = $this->tweet->getFavoriteCount();
-
-        for($i = 0; $i < 10; $i++) {
-            $favoriteTweet = $favoriteTweets[$i];
-            $favorite->favoriteUpdate($i, $favoriteTweet);
-        }
-        $favorites = $favorite->getFavoriteCount();
-        return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
+        return view('user.tweet.index', compact('tweets', 'categories' ));
     }
 
     /**
@@ -64,7 +56,7 @@ class SubCategoryController extends Controller
     public function store(SubCategoryRequest $request)
     {
         $inputs = $request->all();
-        $this->subCategory->fill($inputs)->save();
+        $this->subcategory->fill($inputs)->save();
         return redirect()->route('tweet.index');
     }
 

@@ -35,14 +35,8 @@ class CategoryController extends Controller
         $tweets = $this->tweet->searchCategory($categoryId);//tweetのインスタンスに対してsearchCategoryを行なっているので、tweetsテーブルの中のcategory_idに対して行う
 
         $favorite = new favorite;
-        $favoriteTweets = $this->tweet->getFavoriteCount();
-
-        for($i = 0; $i < 10; $i++) {
-            $favoriteTweet = $favoriteTweets[$i];
-            $favorite->favoriteUpdate($i, $favoriteTweet);
-        }
         $favorites = $favorite->getFavoriteCount();
-        return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
+        return view('user.tweet.index', compact('tweets', 'categories', 'favorites' ));
     }
 
     /**

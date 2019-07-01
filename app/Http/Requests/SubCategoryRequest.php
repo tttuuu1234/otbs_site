@@ -25,7 +25,7 @@ class SubCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required|max10',
+            'content' => 'required|max:10',
             'category_id' => 'required',
         ];
     }

@@ -146,7 +146,8 @@ select {
   box-sizing: border-box;
 }
 
-.form-control {
+.form-control,
+.form-register-text > [type="text"] {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 2px;
@@ -154,6 +155,10 @@ select {
   padding: 10px 14px;
   margin-bottom: 16px;
   font-size: 18px;
+}
+
+.form-register-text :focus {
+  outline: -webkit-focus-ring-color auto 5px;
 }
 
 .form-check {
@@ -322,6 +327,10 @@ select {
   padding: 50px 0;
 }
 
+.contents-area {
+  padding: 50px;
+}
+
 .main-contents {
   width: 650px;
   margin: 0 auto;
@@ -369,7 +378,7 @@ select {
   margin-right: 12px;
 }
 
-.tweet__comment {
+.comment {
   color: #555555;
 }
 
@@ -390,8 +399,6 @@ select {
   background-color: #6666FF;
   color: #fff;
 }
-
-
 
 .btn:active {
   transform: translateY(4px);
@@ -422,13 +429,55 @@ select {
   height: 100%;
 }
 
-.comment-text {
+.comment-box {
   position: fixed;
   top: 50%;
   left: 50%;
   width: 300px;
   height: 300px;
   transform: translate(-50%, -50%);
+}
+
+.comment-textarea  {
+  border: 2px solid #333333;
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+.comment-submit > [type="submit"]{
+  border: 2px solid #06AED5;
+  border-radius: 3px;
+  color: #06AED5;
+  background-color: #fff;
+  transition: .2s
+}
+
+.comments {
+  cursor: pointer;
+}
+
+.comments-box {
+  display: none;
+}
+
+.comments:hover {
+  text-decoration-line: underline;
+  text-decoration-color: #FFBB99;
+}
+
+.comment-area {
+  display: flex;
+  margin: 18px 0;
+  border-bottom: 1px solid #00AAEE;
+}
+
+.comment__name {
+  margin-right: 14px;
+}
+
+.modal-close {
+  font-size: 24px;
+  margin-bottom: 14px;
 }
 
 .sub-category-box {
@@ -512,7 +561,6 @@ select {
 /* create */
 .tweet-create,
 .category-create {
-  padding: 50px 0;
   margin: 0 auto;
   width: 50%;
 }
@@ -570,7 +618,8 @@ select {
   padding: 4px 10px;
 }
 
-.form-submit {
+.form-submit,
+.comment-submit {
   text-align: right;
 }
 
@@ -697,6 +746,8 @@ select {
 .categories__title {
   background-color: #f7f7f7;
   padding: 30px 0;
+  font-weight: bold;
+  font-size: 24px;
 }
 
 .categories__title > h2 {
