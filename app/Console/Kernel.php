@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\WeeklyTagUpdate::class,
+        Commands\MonthlyTagUpdate::class,
+        Commands\DaylyTagUpdate::class      
     ];
 
     /**
@@ -24,8 +26,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('inspire')
+                 ->hourly();
+
+        $schedule->command('weekly:update')
+                 ->weeklyOn(1, '8:00'); //毎週月曜日の8時に行う
+
+        $schedule->command('monthly:update')
+                 ->monthlyOn(1, '8:00'); //毎月1日の10時に行う
+
+        $schedule->command('daily:update')
+                 ->dailyAt('8:00');
     }
 
     /**
