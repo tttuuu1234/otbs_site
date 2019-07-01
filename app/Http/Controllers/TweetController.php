@@ -50,9 +50,9 @@ class TweetController extends Controller
     public function index()
     {
         $categories = $this->category->all();
-        $tweets = $this->tweet->orderby('created_at', 'desc')->paginate(20);
+        $tweets = $this->tweet->orderby('created_at', 'desc')->paginate(10);
 
-        $this->getFavoriteRanking();
+        $this->tweet->getFavoriteRanking();
         $favorites = $this->favorite->getFavoriteCount();
         return view('user.tweet.index', compact('tweets', 'categories','favorites' ));
     }
@@ -97,7 +97,7 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-        $this->getFavoriteRanking();
+        $this->tweet->getFavoriteRanking();
         $favorites = $this->favorite->getFavoriteCount();
         $categories = $this->category->all();
         $tweet = $this->tweet->find($id);
@@ -176,16 +176,6 @@ class TweetController extends Controller
         $user = new user;
         $users = $user->find($userId);
         return view('user.tweet.favorite', compact('users', 'categories'));
-    }
-
-    public function getFavoriteRanking()
-    {
-        $favoriteTweets = $this->tweet->getFavoriteCount();
-
-        for($i = 0; $i < 10; $i++) {
-            $favoriteTweet = $favoriteTweets[$i];
-            $this->favorite->favoriteUpdate($i, $favoriteTweet);
-        }
     }
 
     public function mypage($userId)

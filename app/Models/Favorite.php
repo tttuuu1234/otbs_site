@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Services\FavoriteRanking;
 
 class Favorite extends Model
 {
+    use FavoriteRanking;
+
     protected $fillable = [
         'content',
         'user_id',
@@ -13,24 +16,4 @@ class Favorite extends Model
         'subCategory_id',
         'count',
     ];
-
-    public function getFavoriteCount()
-    {
-        return $this->orderby('count', 'desc')
-                    ->take(10)
-                    ->get();
-    }
-
-    public function favoriteUpdate($i, $favoriteTweet) 
-    {
-
-        $this->find($i + 1)->update([
-            'user_id' => $favoriteTweet->user_id,
-            'content' => $favoriteTweet->content,
-            'category_id' => $favoriteTweet->category_id,
-            'subCategory_id' => $favoriteTweet->subCategory_id,
-            'count' => $favoriteTweet->count,
-        ]);
-    }
-
 }

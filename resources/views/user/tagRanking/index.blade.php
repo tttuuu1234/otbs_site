@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('secondLayout')
 @section('content')			
 <div class="tag-ranking-header">
 	<div class="tag-header-daily__text">

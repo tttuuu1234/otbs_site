@@ -1,6 +1,5 @@
 @extends('layout')
 @section('content')
-<div class="contents">
 	<div class="main-contents">
 		<div class="tweet__name tweet-module">{{ $tweet->user->name }}</div>
 		<div class="tweet__content tweet-module">{{ $tweet->content }}</div>
@@ -8,14 +7,18 @@
 			<div class="tweet__like"><a href="{{ route('tweet.like', $tweet->id) }}"><i class="far fa-heart"></i></a>{{ $tweet->count }}</div>
 			<div class="tweet__comment-btn tweet-module"><i class="far fa-comment"></i></div>
 				<div class="comment-modal is-hidden">
-					<div class="comment-text">
-						{!! Form::open(['route' => 'comment.create']) !!} 
-							<textarea name="comment" cols="50" rows="10" class="form-module"></textarea>
+					<div class="comment-box">
+						<div class="comment-close">
+							<div class="modal-close"><i class="fas fa-times"></i></div>
+						</div>
+						{!! Form::open(['route' => 'comment.create']) !!}
+							<textarea name="comment" cols="50" rows="10" class="form-module comment-textarea"></textarea>
 							{!! Form::input('hidden', 'user_id', Auth::id())!!}
 							{!! Form::input('hidden', 'tweet_id', $tweet->id) !!}
-							<input type="submit" class="form-submit" value="post">
+							<div class="comment-submit">
+								{!! Form::input('submit', 'submit', 'post', ['class' => 'btn'])!!}
+							</div>
 						{!! Form::close() !!}
-						<input type="submit" class="form-submit modal-close" value="close">
 					</div>
 				</div>
 				<div class="tweet__favorite"><a href="{{ route('tweet.favorite', $tweet->user->id) }}"><i class="far fa-star"></i></a></div>
@@ -43,32 +46,15 @@
 		@if(!empty($tweet->comment))
 		<div class="tweet-module">
 			<div class="comments" id="comment-counts">{{ $tweet->comment->count() }}件のコメントを表示</div>
-			<div class="comment-area">
+			<div class="comments-box">
 				@foreach ($tweet->comment as $comment)
-					<div class="comment__name">{{ $comment->user->name }}</div>
-					<div class="tweet__comment tweet-module">{{ $comment->comment }}</div>
+					<div class="comment-area">
+						<div class="comment__name">{{ $comment->user->name }}</div>
+						<div class="comment">{{ $comment->comment }}</div>
+					</div>
 				@endforeach
 			</div>
 		</div>
 		@endif
-
 	</div>
-
-	<div class="side-contents">
-		<h3 class="side-ranking__title">ランキング総合</h3>
-		<p class="side-ranking__read">最近人気のあったニュース</p>
-		<div class="side-ranking">
-				<ul class="side-inner">
-				@foreach ($favorites as $favorite)
-					<li class="side-favorite-list">
-						<div class="side-favorite-rank is-favorite">{{ $favorite->ranking }}位</div>
-						<div class="side-favorite-content is-favorite">{{ $favorite->content }}</div>
-						<div class="side-favorite-count is-favprite">{{ $favorite->count }}fav</div>
-					</li>
-					@endforeach
-				</ul>
-		</div>
-	</div>
-</div>
-
 @endsection

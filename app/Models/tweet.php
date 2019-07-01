@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Services\FavoriteRanking;
 
 class Tweet extends Model
 {
     use SoftDeletes;
+    use FavoriteRanking;
 
     protected $fillable = [
         'content',
@@ -23,8 +25,6 @@ class Tweet extends Model
         'deleted_at',
     ];
 
-    
-    
     public function tag()
     {
         return $this->belongsToMany(Tag::class);
@@ -80,12 +80,5 @@ class Tweet extends Model
         return $this->equal('subCategory_id', $subCategoryId)
                     ->orderby('created_at', 'desc')
                     ->paginate(20);
-    }
-
-    public function getFavoriteCount()
-    {
-        return $this->orderby('count', 'desc')
-                    ->take(10)
-                    ->get();
     }
 }

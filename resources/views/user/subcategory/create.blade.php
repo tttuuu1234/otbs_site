@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('noSideContentsLayout')
 @section('content')
 <div class="category-create">
 	<h2>サブカテゴリー作成</h2>
@@ -23,5 +23,4 @@
 	</div>
 	{!! Form::close() !!}
 </div>
-
 @endsection
