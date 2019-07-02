@@ -26,7 +26,6 @@ Route::get('categories', ['as' => 'category.list', 'uses' => 'CategoryController
 Route::get('subcategory/{id}', ['as' => 'subCategory.index', 'uses' => 'SubCategoryController@index']);
 Route::get('tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
 
-Route::get('top', 'TopListController@index')->name('top.index');
 Route::get('ranking/tag/daily', 'TagRankingController@daily')->name('tag.ranking.daily');
 Route::get('ranking/tag/weekly', 'TagRankingController@weekly')->name('tag.ranking.weekly');
 Route::get('ranking/tag/monthly', 'TagRankingController@monthly')->name('tag.ranking.monthly');
