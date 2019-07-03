@@ -127,11 +127,11 @@ select {
 }
 
 .tweet-box {
-  padding-top: 80px;
+  padding-top: 67px;
 }
 
 .container {
-  padding-top: 80px;
+  padding: 80px 0;
 }
 
 .card {
@@ -217,7 +217,8 @@ select {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  position: relative;  
+  position: relative;
+  padding-top: 20px;
 }
 
 .nav__list__item {
@@ -245,7 +246,7 @@ select {
 
 .sub__nav__list__items {
   position: absolute;
-  top: 30px;
+  top: 50px;
   left: 0;
   display: flex;
   justify-content: center;

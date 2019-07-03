@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 
 class LoginController extends Controller
 {
@@ -26,7 +26,18 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/tweet';
+    protected $redirectTo = '/admin/tweet';
+
+    public function showLoginForm()
+    {
+        return view('admin.auth.login'); //管理者ログインページのテンプレート
+    }
+
+    protected function guard()
+    {
+        return \Auth::guard('admin'); //管理者認証のguardを指定 \をAuthの前につけないとloginできない
+    }
+
 
     /**
      * Create a new controller instance.
@@ -35,7 +46,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:admin')->except('logout');
     }
 
     public function logout(Request $request)
@@ -44,6 +55,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect('/login');
+        return redirect('admin/login');
     }
 }

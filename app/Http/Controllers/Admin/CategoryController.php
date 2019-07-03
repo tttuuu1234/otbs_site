@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\subCategory;
@@ -26,7 +27,7 @@ class CategoryController extends Controller
         $this->category = $category;
         $this->subCategory = $subCategory;
         $this->tweet = $tweet;
-        $this->middleware('auth');
+        $this->middleware('auth:admin');
     }
 
     public function index($categoryId)
@@ -36,7 +37,7 @@ class CategoryController extends Controller
 
         $favorite = new favorite;
         $favorites = $favorite->getFavoriteCount();
-        return view('user.tweet.index', compact('tweets', 'categories', 'favorites' ));
+        return view('admin.tweet.index', compact('tweets', 'categories', 'favorites' ));
     }
 
     /**
@@ -44,30 +45,30 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create()
-    // {
-    //     $categories = $this->category->all();        
-    //     return view('user.category.create', compact('categories'));
-    // }
+    public function create()
+    {
+        $categories = $this->category->all();        
+        return view('admin.category.create', compact('categories'));
+    }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(CategoryRequest $request)
-    // {
-    //     $inputs = $request->all();
-    //     $this->category->fill($inputs)->save();
-    //     return redirect()->route('tweet.index');
-    // }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(CategoryRequest $request)
+    {
+        $inputs = $request->all();
+        $this->category->fill($inputs)->save();
+        return redirect()->route('tweet.index');
+    }
 
     public function categoryList()
     {
         $categoryLists = $this->category->all();
         $categories = $this->category->all();
         $subCategoryLists = $this->subCategory->all();
-        return view('user.category.index', compact('categoryLists', 'subCategoryLists', 'categories'));
+        return view('admin.category.index', compact('categoryLists', 'subCategoryLists', 'categories'));
     }
 }
