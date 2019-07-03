@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
 use App\Models\TheOtherDay;
 use App\MOdels\LastWeek;
 use App\Models\LastMonth;
@@ -24,7 +26,6 @@ class TagRankingController extends Controller
 
         $categories = $this->category->all();
         $theOtherDaysTagCounts = $theOtherDay->getTagCount();
-        // dd($theOtherDaysTagCounts);
         return view('user.tagRanking.index',compact('theOtherDaysTagCounts', 'categories'));
     }
 

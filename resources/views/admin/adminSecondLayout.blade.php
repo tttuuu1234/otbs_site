@@ -17,21 +17,6 @@
     <div class="tweet-header-wrap inner">
       <div class="tweet-header__title"><a href="{{route('admin.tweet.index') }}">Spit learning</a></div>
       <ul class="tweet-header__list">
-        <!-- Authentication Links -->
-        @guest
-          <li>
-            <a href="#" class="tweet-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
-            <div class="content__hover">SNS</div>
-          </li>
-          <li>
-            <a href="#" class="tweet-header__list__item link__hover"><i class="far fa-envelope-open"></i></a>
-            <div class="content__hover">contact</div>
-          </li>
-          <li><a class="tweet-header__list__item link__hover" href="{{ route('admin.login') }}">{{ __('adminLogin') }}</a></li>
-        @if (Route::has('register'))
-          <li><a class="tweet-header__list__item link__hover" href="{{ route('admin.register') }}">{{ __('adminRegister') }}</a></li>
-        @endif
-        @else
           <li>
             <a href="#" class="tweet-header__list__item link__hover"><i class="fas fa-info-circle"></i></a>
             <div class="content__hover">SNS</div>
@@ -54,33 +39,54 @@
           </li>
 
           <li>
-            <a class="tweet-header__list__item">{{ Auth::user()->name }}</a>
+            <a class="tweet-header__list__item" href="{{ route('admin.tweet.mypage', Auth::user()->id) }}">
+              {{ Auth::user()->name }} <span class="caret"></span>
+            </a>
             
             <a class="tweet-header__list__item" href="{{ route('admin.logout') }}"
               onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">
-              {{ __('Logout') }}
+              {{ __('adminLogout') }}
             </a>
             <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
               @csrf
             </form>
           </li>
-        @endguest
       </ul>
     </div>
   </header>
 
   <main class="inner tweet-box">
-		@yield('content')
+			@if(isset($categories))
+				<nav class="nav">
+					<ul class=" inner nav__list">
+						<li class="nav__list__item"><a href="{{ route('admin.tweet.index') }}">全記事</a></li>
+						@foreach ($categories as $category)
+							<li class="nav__list__item category-link-{{ $category->id }}">
+								<a href="{{ route('admin.category.index', $category->id) }}">{{ $category->name }}</a>
+								<div class="sub__nav__list is-hidden">
+									<ul class="sub__nav__list__items category-{{ $category->id }} inner">
+										@foreach ($category->subCategory as $subCategory)
+											<li class="sub__nav__list__item"><a href="{{ route('admin.subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
+										@endforeach
+									</ul>      
+								</div>
+							</li>     
+						@endforeach
+						<li class="nav__list__item"><a href="{{ route('admin.tag.ranking.daily') }}">ランキング</a></li>
+					</ul>
+			</nav>
+			@endif
+				@yield('content')
   </main>
 
   <footer class="footer">
     <div class="tweet-footer-box inner">
-      <div class="tweet-footer__title">ツバシーについて</div>
+      <div class="tweet-footer__title">Spit learningについて</div>
       <ul class="tweet-footer__list">
         <li><a href="#" class="footer__list__item">お気に入りランキング一覧</a></li>
-        <li><a href="{{ route('tag.ranking.daily') }}" class="footer__list__item">タグランキング一覧</a></li>
-        <li><a href="{{ route('category.list') }}" class="footer__list__item">カテゴリ一覧</a></li>
+        <li><a href="{{ route('admin.tag.ranking.daily') }}" class="footer__list__item">タグランキング一覧</a></li>
+        <li><a href="{{ route('admin.category.list') }}" class="footer__list__item">カテゴリ一覧</a></li>
       </ul>
     </div>
   </footer>

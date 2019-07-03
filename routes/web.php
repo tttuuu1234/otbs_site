@@ -10,34 +10,35 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('user/{id}', 'TweetController@mypage')->name('tweet.mypage');
-Route::get('user/{id}/favorite', ['as' => 'tweet.favorite', 'uses' => 'TweetController@favorite']);
-Route::get('/tweet', 'TweetController@index')->name('tweet.index');
-Route::get('tweet/create', 'TweetController@create')->name('tweet.create');
-Route::post('/tweet', 'TweetController@store')->name('tweet.store');
-Route::get('tweet/{id}', ['as' => 'tweet.show', 'uses' => 'TweetController@show']);
-Route::get('tweet/{id}/edit', ['as' => 'tweet.edit', 'uses' => 'TweetController@edit']);
-Route::put('tweet/{id}/', ['as' => 'tweet.update', 'uses' => 'TweetController@update']);
-Route::delete('tweet/{id}/', ['as' => 'tweet.destroy', 'uses' => 'TweetController@destroy']);
-Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
-Route::get('tweet/like/{id}', ['as' => 'tweet.like', 'uses' => 'TweetController@like']);
-Route::get('category/{id}', ['as' => 'category.index', 'uses' => 'CategoryController@index']);
-Route::get('categories', ['as' => 'category.list', 'uses' => 'CategoryController@categoryList']);
-Route::get('subcategory/{id}', ['as' => 'subCategory.index', 'uses' => 'SubCategoryController@index']);
-Route::get('tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
 
-Route::get('ranking/tag/daily', 'TagRankingController@daily')->name('tag.ranking.daily');
-Route::get('ranking/tag/weekly', 'TagRankingController@weekly')->name('tag.ranking.weekly');
-Route::get('ranking/tag/monthly', 'TagRankingController@monthly')->name('tag.ranking.monthly');
-Route::resource('categorize', CategoryController::class, ['only' => ['create', 'store']]);
-Route::resource('subCategory', SubCategoryController::class, ['only' => ['create', 'store']]);
+// user
+Route::group(['middleware' => 'guest', 'namespace' => 'User'], function(){
+    Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\LoginController@login')->name('login');
+    Route::get('register', 'Auth\RegisterController@showRegisterForm')->name('register');
+    Route::post('register', 'Auth\RegisterController@adminRegister')->name('register');
+    Route::get('password/rest', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+});
 
 
-Route::auth();
+Route::group(['middleware' => 'auth', 'namespace' => 'User'], function(){
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('user/{id}', 'TweetController@mypage')->name('tweet.mypage');
+    Route::get('user/{id}/favorite', ['as' => 'tweet.favorite', 'uses' => 'TweetController@favorite']);
+    Route::resource('tweet', TweetController::class);
+    Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
+    Route::get('tweet/like/{id}', ['as' => 'tweet.like', 'uses' => 'TweetController@like']);
+    Route::get('category/{id}', ['as' => 'category.index', 'uses' => 'CategoryController@index']);
+    Route::get('categories', ['as' => 'category.list', 'uses' => 'CategoryController@categoryList']);
+    Route::get('subcategory/{id}', ['as' => 'subCategory.index', 'uses' => 'SubCategoryController@index']);
+    Route::get('tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
+    Route::get('ranking/tag/daily', 'TagRankingController@daily')->name('tag.ranking.daily');
+    Route::get('ranking/tag/weekly', 'TagRankingController@weekly')->name('tag.ranking.weekly');
+    Route::get('ranking/tag/monthly', 'TagRankingController@monthly')->name('tag.ranking.monthly');
+});
 
-Route::get('/home', 'HomeController@index');
-
-Route::group(['prefix' => 'admin', 'middleware' => 'guest:admin'], function() {
+// admin
+Route::group(['prefix' => 'admin', 'middleware' => 'guest:admin'],  function() {
     Route::get('/', function () {
         return view('admin.welcome');
     });
@@ -48,14 +49,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest:admin'], function() {
     Route::post('register', 'Admin\Auth\RegisterController@adminRegister')->name('admin.register');
     Route::get('password/rest', 'Admin\Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
 });
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'namespace' => 'Admin'], function(){
-    Route::post('logout', 'Auth\LoginController@logout')->name('admin.logout');
+
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'namespace' => 'Admin', 'as' => 'admin.'], function(){
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
     Route::resource('tweet', TweetController::class);
+    Route::get('user/{id}/favorite', ['as' => 'tweet.favorite', 'uses' => 'TweetController@favorite']);
+    Route::get('user/{id}', 'TweetController@mypage')->name('tweet.mypage');
+    Route::post('tweet/comment', ['as' => 'comment.create', 'uses' => 'TweetController@createComment']);
+    Route::get('tweet/like/{id}', ['as' => 'tweet.like', 'uses' => 'TweetController@like']);
     Route::resource('categorize', CategoryController::class, ['only' => ['create', 'store']]);
     Route::resource('subCategory', SubCategoryController::class, ['only' => ['create', 'store']]);
     Route::get('category/{id}', ['as' => 'category.index', 'uses' => 'CategoryController@index']);
     Route::get('categories', ['as' => 'category.list', 'uses' => 'CategoryController@categoryList']);
     Route::get('subcategory/{id}', ['as' => 'subCategory.index', 'uses' => 'SubCategoryController@index']);
+    Route::get('tag/{id}', ['as' => 'tag.index', 'uses' => 'TagController@index']);
+    Route::get('ranking/tag/daily', 'TagRankingController@daily')->name('tag.ranking.daily');
+    Route::get('ranking/tag/weekly', 'TagRankingController@weekly')->name('tag.ranking.weekly');
+    Route::get('ranking/tag/monthly', 'TagRankingController@monthly')->name('tag.ranking.monthly');
 
 });
 

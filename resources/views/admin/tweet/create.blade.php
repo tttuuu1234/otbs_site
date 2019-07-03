@@ -1,9 +1,9 @@
-@extends('noSideContentsLayout')
+@extends('admin.adminNoSideContentsLayout')
 @section('content')
 <div class="tweet-create">
 <h2>tweet作成</h2>
 <div class="tweet-wrap">
-	{!!Form::open(['route' => 'tweet.store'])!!}
+	{!!Form::open(['route' => 'admin.tweet.store'])!!}
 		<div class="form-group @if(!empty($errors->first('category_id'))) has-error @endif">
 			{!! Form::input('hidden', 'user_id', Auth::id() )!!}
 			<span class="tweet-required">*</span>
@@ -42,5 +42,4 @@
 	{!!Form::close()!!}
 </div>
 </div>
-
 @endsection

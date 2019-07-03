@@ -16,7 +16,7 @@
   @if(Auth::guard('admin')->check())
     <header class="header">
       <div class="tweet-header-wrap inner">
-        <div class="tweet-header__title"><a href="{{route('tweet.index') }}">Spit learning</a></div>
+        <div class="tweet-header__title"><a href="{{route('admin.tweet.index') }}">Spit learning</a></div>
         <ul class="tweet-header__list">
           <!-- Authentication Links -->
             <li>
@@ -28,15 +28,15 @@
               <div class="content__hover">contact</div>
             </li>
             <li>
-              <a href="{{route('tweet.create')}}" class="tweet-header__list__item link__hover"><i class="fas fa-plus-square"></i></a>
+              <a href="{{route('admin.tweet.create')}}" class="tweet-header__list__item link__hover"><i class="fas fa-plus-square"></i></a>
               <div class="content__hover">Tweet作成</div>
             </li>
             <li>
-              <a href="{{ route('categorize.create') }}" class="tweet-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
+              <a href="{{ route('admin.categorize.create') }}" class="tweet-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
               <div class="content__hover">カテゴリー作成</div>
             </li>
             <li>
-              <a href="{{ route('subCategory.create') }}" class="tweet-header__list__item link__hover"><i class="fas fa-calendar-plus"></i></a>
+              <a href="{{ route('admin.subCategory.create') }}" class="tweet-header__list__item link__hover"><i class="fas fa-calendar-plus"></i></a>
               <div class="content__hover">サブカテゴリー作成</div>
             </li>
 
@@ -62,14 +62,14 @@
           @if(isset($categories))
             <nav class="nav">
               <ul class=" inner nav__list">
-                <li class="nav__list__item"><a href="{{ route('tweet.index') }}">全記事</a></li>
+                <li class="nav__list__item"><a href="{{ route('admin.tweet.index') }}">全記事</a></li>
                 @foreach ($categories as $category)
                   <li class="nav__list__item category-link-{{ $category->id }}">
-                    <a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a>
+                    <a href="{{ route('admin.category.index', $category->id) }}">{{ $category->name }}</a>
                     <div class="sub__nav__list is-hidden">
                       <ul class="sub__nav__list__items category-{{ $category->id }} inner">
                         @foreach ($category->subCategory as $subCategory)
-                          <li class="sub__nav__list__item"><a href="{{ route('subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
+                          <li class="sub__nav__list__item"><a href="{{ route('admin.subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></li>
                         @endforeach
                       </ul>      
                     </div>
@@ -106,8 +106,8 @@
         <div class="tweet-footer__title">Spit learningについて</div>
         <ul class="tweet-footer__list">
           <li><a href="#" class="footer__list__item">お気に入りランキング一覧</a></li>
-          <li><a href="{{ route('tag.ranking.daily') }}" class="footer__list__item">タグランキング一覧</a></li>
-          <li><a href="{{ route('category.list') }}" class="footer__list__item">カテゴリ一覧</a></li>
+          <li><a href="{{ route('admin.tag.ranking.daily') }}" class="footer__list__item">タグランキング一覧</a></li>
+          <li><a href="{{ route('admin.category.list') }}" class="footer__list__item">カテゴリ一覧</a></li>
         </ul>
       </div>
     </footer>

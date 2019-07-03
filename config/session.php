@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 
-return [
+$sessConf = [
 
     /*
     |--------------------------------------------------------------------------
@@ -197,3 +197,15 @@ return [
     'same_site' => null,
 
 ];
+ 
+//以下を最終行に追記
+$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+ 
+if (strpos($uri, '/admin/') === 0 || $uri === '/admin') {
+    $sessConf['cookie'] = env(
+        'SESSION_COOKIE_ADMIN',
+        str_slug(env('APP_NAME', 'laravel'), '_').'_admin_session'
+    );
+}
+ 
+return $sessConf;

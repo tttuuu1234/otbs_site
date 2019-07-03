@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 use App\Models\Category;
@@ -35,28 +36,4 @@ class SubCategoryController extends Controller
 
         return view('user.tweet.index', compact('tweets', 'categories' ));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function create()
-    // {
-    //     $categories = $this->category->all();
-    //     return view('user.subcategory.create', compact('categories'));
-    // }
-
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(SubCategoryRequest $request)
-    // {
-    //     $inputs = $request->all();
-    //     $this->subcategory->fill($inputs)->save();
-    //     return redirect()->route('tweet.index');
-    // }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\subCategory;
@@ -38,30 +39,6 @@ class CategoryController extends Controller
         $favorites = $favorite->getFavoriteCount();
         return view('user.tweet.index', compact('tweets', 'categories', 'favorites' ));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function create()
-    // {
-    //     $categories = $this->category->all();        
-    //     return view('user.category.create', compact('categories'));
-    // }
-
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(CategoryRequest $request)
-    // {
-    //     $inputs = $request->all();
-    //     $this->category->fill($inputs)->save();
-    //     return redirect()->route('tweet.index');
-    // }
 
     public function categoryList()
     {

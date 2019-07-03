@@ -1,6 +1,6 @@
 <?php
 
-return [
+$authConf = [
 
     /*
     |--------------------------------------------------------------------------
@@ -112,3 +112,16 @@ return [
     ],
 
 ];
+ 
+//以下を最終行に追記
+ 
+$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+ 
+if (strpos($uri, '/admin/') === 0 || $uri === '/admin') {
+    $authConf['defaults'] = [
+        'guard' => 'user',
+        'passwords' => 'users',
+    ];
+}
+ 
+return $authConf;

@@ -58,6 +58,6 @@ class SubCategoryController extends Controller
     {
         $inputs = $request->all();
         $this->subcategory->fill($inputs)->save();
-        return redirect()->route('admin.tweet.index');
+        return redirect()->route('tweet.index');
     }
 }

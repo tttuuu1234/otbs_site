@@ -45,19 +45,9 @@
             <div class="content__hover">Tweet作成</div>
           </li>
           <li>
-            <a href="{{ route('categorize.create') }}" class="tweet-header__list__item link__hover" ><i class="fas fa-cart-plus"></i></a>
-            <div class="content__hover">カテゴリー作成</div>
+            <a class="tweet-header__list__item" href="{{ route('tweet.mypage', Auth::user()->id) }}">{{ Auth::user()->name }}</a>
           </li>
-          <li>
-            <a href="{{ route('subCategory.create') }}" class="tweet-header__list__item link__hover"><i class="fas fa-calendar-plus"></i></a>
-            <div class="content__hover">サブカテゴリー作成</div>
-          </li>
-
-          <li>
-            <a class="tweet-header__list__item" href="{{ route('tweet.mypage', Auth::user()->id) }}">
-              {{ Auth::user()->name }} <span class="caret"></span>
-            </a>
-            
+          <li>  
             <a class="tweet-header__list__item" href="{{ route('logout') }}"
               onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">

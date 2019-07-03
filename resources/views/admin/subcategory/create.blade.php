@@ -1,8 +1,8 @@
-@extends('noSideContentsLayout')
+@extends('admin.adminNoSideContentsLayout')
 @section('content')
 <div class="category-create">
 	<h2>サブカテゴリー作成</h2>
-	{!! Form::open(['route' => 'subCategory.store']) !!}
+	{!! Form::open(['route' => 'admin.subCategory.store']) !!}
 	<div class="form-group @if(!empty($errors->first('category_id'))) has-error @endif">
 		<span class="tweet-required">*</span>
 		<span class="error-message">{{ $errors->first('category_id') }}</span>

@@ -1,4 +1,4 @@
-@extends('noSideContentsLayout')
+@extends('admin.adminNoSideContentsLayout')
 @section('content')
 
 <div class="contents">
@@ -8,7 +8,7 @@
 			<p class="category__title">メインカテゴリー</p>
 			<div class="category-links">
 				@foreach ($categoryLists as $category)
-					<div class="category-name"><a href="{{ route('category.index', $category->id) }}">{{ $category->name }}</a></div>
+					<div class="category-name"><a href="{{ route('admin.category.index', $category->id) }}">{{ $category->name }}</a></div>
 				@endforeach
 			</div>	
 		</div>
@@ -16,7 +16,7 @@
 			<p class="category__title">サブカテゴリー</p>
 			<div class="category-links">
 				@foreach ($subCategoryLists as $subCategory)
-					<div class="category-name"><a href="{{ route('subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></div>
+					<div class="category-name"><a href="{{ route('admin.subCategory.index', $subCategory->id) }}">{{ $subCategory->content }}</a></div>
 				@endforeach	
 			</div>	
 		</div>
