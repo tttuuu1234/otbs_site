@@ -43,8 +43,8 @@ class TagController extends Controller
         $dailyTag = $day->find($tagId);
         $weeklyTag->increment('count');
         $monthlyTag->increment('count');
-        $this->tag->increment('count');
         $dailyTag->increment('count');
+        $tag->increment('count');
         $tweets = $tags->tweet()->orderby('tag_id', 'desc')->paginate(10); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
 
         $favorite = new favorite;

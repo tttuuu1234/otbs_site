@@ -36,16 +36,16 @@ class TagController extends Controller
     {
         $categories = $this->category->all();
         $day = new day;
-
-        $tags = $this->tag->find($tagId); //$inputsに格納されているtag_idの値をfindでそのidをしているtagのオブジェクトを取得
+        $tag = $this->tag->find($tagId); //$inputsに格納されているtag_idの値をfindでそのidをしているtagのオブジェクトを取得
         $weeklyTag = $this->weekly->find($tagId);
         $monthlyTag = $this->monthly->find($tagId);
         $dailyTag = $day->find($tagId);
         $weeklyTag->increment('count');
         $monthlyTag->increment('count');
-        $this->tag->increment('count');
+        // $this->tag->increment('count'); tagオブジェクト全てに適応させてしまう
+        $tag->increment('count');
         $dailyTag->increment('count');
-        $tweets = $tags->tweet()->orderby('tag_id', 'desc')->paginate(10); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
+        $tweets = $tag->tweet()->orderby('tag_id', 'desc')->paginate(10); //tagのオブジェクトに対してtweetメソッドで中間テーブルにアクセスして取得
 
         $favorite = new favorite;
         $favoriteTweets = $this->tweet->getFavoriteCount();

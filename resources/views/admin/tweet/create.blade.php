@@ -1,4 +1,4 @@
-@extends('admin.adminNoSideContentsLayout')
+@extends('admin.noSideContentsLayout')
 @section('content')
 <div class="tweet-create">
 <h2>tweet作成</h2>

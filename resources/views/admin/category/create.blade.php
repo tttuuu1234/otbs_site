@@ -1,4 +1,4 @@
-@extends('admin.adminNoSideContentsLayout')
+@extends('admin.noSideContentsLayout')
 @section('content')
 <div class="category-create">
 	<h2>メインカテゴリー作成</h2>

@@ -555,6 +555,15 @@ select {
   text-align: right;
 }
 
+.favorite {
+  display: flex;
+  margin-top: 18px;
+}
+
+.favorite__ranking {
+  margin-right: 24px;
+}
+
 /* index */
 
 
@@ -641,7 +650,7 @@ select {
 .tag-ranking-header {
   border: 1px solid black;
   padding: 24px 12px;
-  margin-top:45px;
+  margin-top:50px;
   background-color: peru;
 }
 
@@ -735,8 +744,12 @@ select {
   margin-bottom: 14px;
 }
 
+.tweet-footer__list {
+  display: flex;
+}
+
 .tweet-footer__list > li {
-  margin-bottom: 12px;
+  margin-right: 12px;
 }
 
 

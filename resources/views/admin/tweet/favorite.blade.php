@@ -1,6 +1,7 @@
-@extends('noSideContentsLayout')
+@extends('admin.layout')
 @section('content')
-	<div class="main-contents">
+
+<div class="tweet-box inner">
 		<div class="my-name">
 			{{ $users->name }}のお気に入り
 		</div>
@@ -10,5 +11,5 @@
 				<div class="favorite__user__content">{{ $tweet->content }}</div>		
 			</div>			
 		@endforeach
-	</div>
+</div>
 @endsection

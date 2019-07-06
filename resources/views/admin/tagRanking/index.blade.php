@@ -1,9 +1,8 @@
-@extends('admin.adminSecondLayout')
+@extends('admin.secondLayout')
 @section('content')			
 <div class="tag-ranking-header">
 	<div class="tag-header-daily__text">
-		<h2 class="tag-ranking__title">今日のランキング総合</h2> <!--javascriptでtextを月間、週間と変えている？-->
-		<p class="tag-ranking__description">1日間のツバシー全タグ中のユーザーに最も人気になったタグです！気になったタグを是非検索してみしてみませんか？</p>
+		<h2 class="tag-ranking__title">今日のランキング総合</h2>
 	</div>
 </div>
 

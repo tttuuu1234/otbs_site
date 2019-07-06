@@ -1,4 +1,4 @@
-@extends('admin.adminLayout')
+@extends('admin.layout')
 @section('content')
   <div class="main-contents">
     @if(isset($tweets))

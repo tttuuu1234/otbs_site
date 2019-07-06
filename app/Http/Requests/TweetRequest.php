@@ -27,7 +27,7 @@ class TweetRequest extends FormRequest
             'content' => 'required|max:400',
             'category_id' => 'required',
             'subCategory_id' => 'required',
-            'name' => 'required|max:10',
+            'name' => 'required|max:50',
         ];
     }
 
@@ -39,7 +39,7 @@ class TweetRequest extends FormRequest
             'category_id.required' => '入力必須だわい',
             'subCategory_id.required' => '入力必須でええええす',
             'name.required' => '入力必須だぜい',
-            'name.max' => '10文字以内なんだわ',
+            'name.max' => '50文字以内なんだわ',
         ];
     }
 }

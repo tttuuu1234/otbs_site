@@ -1,4 +1,4 @@
-@extends('admin.adminNoSideContentsLayout')
+@extends('admin.noSideContentsLayout')
 @section('content')
 
 <div class="contents">

@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'User'], function(){
     Route::get('ranking/tag/daily', 'TagRankingController@daily')->name('tag.ranking.daily');
     Route::get('ranking/tag/weekly', 'TagRankingController@weekly')->name('tag.ranking.weekly');
     Route::get('ranking/tag/monthly', 'TagRankingController@monthly')->name('tag.ranking.monthly');
+    Route::get('favorites', 'FavoriteController@index')->name('favorite.index');
 });
 
 // admin
@@ -66,6 +67,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin', 'namespace' => 
     Route::get('ranking/tag/daily', 'TagRankingController@daily')->name('tag.ranking.daily');
     Route::get('ranking/tag/weekly', 'TagRankingController@weekly')->name('tag.ranking.weekly');
     Route::get('ranking/tag/monthly', 'TagRankingController@monthly')->name('tag.ranking.monthly');
-
+    Route::get('favorites', 'FavoriteController@index')->name('favorite.index');
 });
 

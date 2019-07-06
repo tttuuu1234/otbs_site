@@ -17,7 +17,6 @@ use App\Models\SubCategory;
 use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 
-
 class TweetController extends Controller
 {
     /**
@@ -78,14 +77,19 @@ class TweetController extends Controller
     public function store(TweetRequest $request)
     {
         $inputs = $request->all();
+        $tagName = $inputs['name'];
+        $tagNameArray = explode(',', $tagName);
+
         $tweet = $this->tweet->fill($inputs)->save();
-        $week = $this->weekly->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);
-        $month = $this->monthly->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);
-        $dayly = $this->day->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);
-        // dd($dayly);
-        $tag = $this->tag->firstOrCreate(['name' => $inputs['name']], ['count' => 0]);//firstOrCreate(検索したいレコードのカラム名, 新しくレコードを追加する時に挿入する他のカラムの値)
-        $tagId = $tag->id;//tagからidを取得している
-        $this->tweet->tag()->attach($tagId); //中間テーブルに保存する処理
+
+        for($i = 0; $i < count($tagNameArray); $i++) {
+            $tag = $this->tag->firstOrCreate(['name' => $tagNameArray[$i]], ['count' => 0]);//firstOrCreate(検索したいレコードのカラム名, 新しくレコードを追加する時に挿入する他のカラムの値)
+            $week = $this->weekly->firstOrCreate(['name' => $tagNameArray[$i]], ['count' => 0]);
+            $month = $this->monthly->firstOrCreate(['name' => $tagNameArray[$i]], ['count' => 0]);
+            $dayly = $this->day->firstOrCreate(['name' => $tagNameArray[$i]], ['count' => 0]);
+            $tagId = $tag->id;
+            $this->tweet->tag()->attach($tagId); //中間テーブルに保存する処理
+        }
         return redirect()->route('tweet.index');
     }
 
